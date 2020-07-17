@@ -2,7 +2,7 @@
 title: 'Really Smart Acronym'
 ---
 
-### **Challenge Description: **
+### Challenge Description: 
 
 `*Man, oracles are weird.*
 
