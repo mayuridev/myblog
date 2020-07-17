@@ -10,5 +10,4 @@ During quarantine, I decided to make a blog to journal my thoughts and experienc
 This blog was made with Jekyll and hosted via Github Pages. I hope you enjoy!
 
 Sincerely,
-
 Dylan
