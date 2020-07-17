@@ -1,0 +1,10 @@
+title: The Haven
+description: "a journal of thoughts"
+baseurl: /
+homepage: https://mayuridev.github.io
+markdown:         redcarpet
+highlighter:      pygments
+permalink:        pretty
+paginate:         5
+excerpt_separator: <!--more-->
+about: https://dylaniskandar.com
