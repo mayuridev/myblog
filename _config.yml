@@ -2,7 +2,7 @@ title: The Haven
 description: "a journal of thoughts"
 baseurl: /
 homepage: https://blog.dylaniskandar.com
-highlighter:      pygments
+highlighter:      rouge
 permalink:        pretty
 paginate:         5
 excerpt_separator: <!--more-->
