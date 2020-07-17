@@ -4,9 +4,11 @@ title: 'Really Smart Acronym'
 
 ### Challenge Description: 
 
-`*Man, oracles are weird.*
+```
+*Man, oracles are weird.*
 
-*nc challenges1.hexionteam.com 5000*`
+*nc challenges1.hexionteam.com 5000*
+```
 
 
 
