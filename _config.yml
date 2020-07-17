@@ -1,7 +1,7 @@
 title: The Haven
 description: "a journal of thoughts"
 baseurl: /
-homepage: https://mayuridev.github.io
+homepage: https://blog.dylaniskandar.com
 markdown:         redcarpet
 highlighter:      pygments
 permalink:        pretty
