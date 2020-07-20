@@ -14,7 +14,7 @@ nc challenges1.hexionteam.com 5000
 
 ### **Solving :** 
 
-​	Really Smart Acronym, of course, is RSA. Looking at the code, it uses PyCrypto to generate a RSA key to encrypt the flag. You also get one encryption and 1024 decrypts, but you only get the last bit of the decrypts. At first we thought it could be Franklin-Reiter related-message attack, but there is not enough information for that.
+​Really Smart Acronym, of course, is RSA. Looking at the code, it uses PyCrypto to generate a RSA key to encrypt the flag. You also get one encryption and 1024 decrypts, but you only get the last bit of the decrypts. At first we thought it could be Franklin-Reiter related-message attack, but there is not enough information for that.
 
 <!--more-->
 
