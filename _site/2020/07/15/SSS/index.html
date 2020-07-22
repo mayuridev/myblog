@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title>
+    
+      S.S.S. &middot; The Haven
+    
+  </title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/public/css/poole.css"
+  <link rel="stylesheet" href="/public/css/syntax.css"
+  <link rel="stylesheet" href="/public/css/hyde.css"
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
+
+  <!-- Icons -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/public/apple-touch-icon-144-precomposed.png">
+                                 <link rel="shortcut icon" href="/public/favicon.ico">
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+  <!--<link rel="stylesheet" href="//public/css/syntax.css ">
+  <link rel="stylesheet" href="//public/css/hyde.css ">-->
+</head>
+
+
+  <body>
+    <div class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <h1>
+        <a href="/">
+          The Haven
+        </a>
+      </h1>
+      <p class="lead">a journal of thoughts</p>
+    </div>
+
+    <nav class="sidebar-nav">
+      <a class="sidebar-nav-item" href="/allposts">All Posts</a>
+        <a style="text-indent: 10px" class="sidebar-nav-item" href="/cybersec">CyberSecurity</a>
+        <a style="text-indent: 10px" class="sidebar-nav-item" href="/misc">Miscellaneous</a>
+      <a class="sidebar-nav-item" href="https://dylaniskandar.com">About Me</a>
+    </nav>
+
+    <p>&copy; 2020 Dylan Iskandar.</p>
+  </div>
+</div>
+
+    <div class="content container">
+      <div class="post">
+  <h1 class="post-title">S.S.S.</h1>
+  <span class="post-date">15 Jul 2020</span>
+  <p>This is a writeup for HexionCTF 2020, where <a href="https://rgbsec.xyz">we</a> placed third.</p>
+
+<h3 id="challenge-description">Challenge Description:</h3>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Math is so beautiful and can always be used for cryptographic
+encryption!
+nc challenges1.hexionteam.com 5001
+</code></pre></div></div>
+
+<h3 id="solving-">Solving :</h3>
+
+<p>We are given an sss.py. See <a href="https://pastebin.com/uYwhAUcX">here</a> for source.</p>
+
+<p>We found that SSS stands for Shamir’s Secret Sharing by copy-pasting the loop from <code class="highlighter-rouge">eval_at</code>, which brought me to <a href="https://en.wikipedia.org/wiki/Shamir's_Secret_Sharing">this</a> Wikipedia Page. Shamir Secret Sharing is based on polynomials and lagrange interpolation.</p>
+
+<!--more-->
+
+<p>Most of this code (nearly everything except main) is taken from Wikipedia’s example implementation of Shamir’s Secret Sharing. The concept is relatively simple. The sss.py that we are given is giving out “shares”, with the flag as the secret. We can just request enough shares until we meet the minimum threshold to be able to recover the secret. From there, we can use langrage interpolation to calculate y for x=0 and retrieve our flag.</p>
+
+<h3 id="solve-script-">Solve Script :</h3>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>from Crypto.Util.number import long_to_bytes
+from pwn import remote
+ 
+P = 2 ** 521 - 1
+ 
+ 
+def eval_at(poly, x, prime):
+    accum = 0
+    for coeff in reversed(poly):
+        accum *= x
+        accum += coeff
+        accum %= prime
+    return accum
+ 
+ 
+def extended_gcd(a, b):
+    x = 0
+    last_x = 1
+    y = 1
+    last_y = 0
+    while b != 0:
+        quot = a // b
+        a, b = b, a % b
+        x, last_x = last_x - quot * x, x
+        y, last_y = last_y - quot * y, y
+    return last_x, last_y
+ 
+ 
+def divmod(num, den, p):
+    inv, _ = extended_gcd(den, p)
+    return num * inv
+ 
+ 
+def _lagrange_interpolate(x, x_s, y_s, p):
+    k = len(x_s)
+    assert k == len(set(x_s)), "points must be distinct"
+ 
+    def PI(vals):  # product of inputs
+        accum = 1
+        for v in vals:
+            accum *= v
+        return accum
+ 
+    nums = []
+    dens = []
+    for i in range(k):
+        others = list(x_s)
+        cur = others.pop(i)
+        nums.append(PI(x - o for o in others))
+        dens.append(PI(cur - o for o in others))
+    den = PI(dens)
+    num = sum([divmod(nums[i] * den * y_s[i] % p, dens[i], p)
+               for i in range(k)])
+    return (divmod(num, den, p) + p) % p
+ 
+ 
+def recover_secret(shares, prime=P):
+    x_s, y_s = zip(*shares)
+    return _lagrange_interpolate(0, x_s, y_s, prime)
+ 
+ 
+def main():
+    # connect to the nc server
+    r = remote("challenges1.hexionteam.com", 5001)
+    r.recvuntil("&gt;&gt;&gt;")
+    shares = []
+ 
+    # request 78 shares, just to be safe (min is a random int between 48 and 63, inclusive)
+    for i in range(0x1, 0x50):
+        if i == ord('\n'):  
+            continue
+        r.sendline(long_to_bytes(i))
+        resp = r.recvline().decode()
+        resp = resp.strip().strip('&gt;').strip()
+        shares.append((i,int(resp)))
+ 
+        if len(shares) % 5 == 0:
+            print("Acquired", len(shares), "shares")
+ 
+    # print(shares)
+    print(long_to_bytes(recover_secret(shares)))
+ 
+ 
+if __name__ == '__main__':
+    main()
+</code></pre></div></div>
+
+<p>Flag : <strong>hexCTF{d0nt_us3_shar3s_lik3_that}</strong></p>
+
+</div>
+
+<div class="related">
+  <h2>Related Posts</h2>
+  <ul class="related-posts">
+    
+      <li>
+        <h3>
+          <a href="/2020/07/17/Access=0000/">
+            Access=0000
+            <small>17 Jul 2020</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/2020/07/16/Really-Smart-Acronym/">
+            Really Smart Acronym
+            <small>16 Jul 2020</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/2020/07/15/Hello-World!/">
+            Hello World!
+            <small>15 Jul 2020</small>
+          </a>
+        </h3>
+      </li>
+    
+  </ul>
+</div>
+
+    </div>
+
+  </body>
+</html>

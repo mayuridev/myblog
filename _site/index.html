@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title>
+    
+      The Haven &middot; Dylan's Blog
+    
+  </title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/public/css/poole.css"
+  <link rel="stylesheet" href="/public/css/syntax.css"
+  <link rel="stylesheet" href="/public/css/hyde.css"
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
+
+  <!-- Icons -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/public/apple-touch-icon-144-precomposed.png">
+                                 <link rel="shortcut icon" href="/public/favicon.ico">
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+  <!--<link rel="stylesheet" href="//public/css/syntax.css ">
+  <link rel="stylesheet" href="//public/css/hyde.css ">-->
+</head>
+
+
+  <body>
+    <div class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <h1>
+        <a href="/">
+          The Haven
+        </a>
+      </h1>
+      <p class="lead">a journal of thoughts</p>
+    </div>
+
+    <nav class="sidebar-nav">
+      <a class="sidebar-nav-item" href="/allposts">All Posts</a>
+        <a style="text-indent: 10px" class="sidebar-nav-item" href="/cybersec">CyberSecurity</a>
+        <a style="text-indent: 10px" class="sidebar-nav-item" href="/misc">Miscellaneous</a>
+      <a class="sidebar-nav-item" href="https://dylaniskandar.com">About Me</a>
+    </nav>
+
+    <p>&copy; 2020 Dylan Iskandar.</p>
+  </div>
+</div>
+
+    <div class="content container">
+      <meta property="og:image" content="https://imgur.com/a/sLg2b7d" />
+<div class="posts">
+  
+    
+    <div class="post">
+      <h1 class="post-title">
+        <a href="/2020/07/17/Access=0000/">
+          Access=0000
+        </a>
+      </h1>
+
+      <span class="post-date">17 Jul 2020</span>
+
+      <p>This was a writeup for a crypto challenge in <a href="https://ractf.co.uk/">RACTF</a> 2020, where <a href="https://rgbsec.xyz">we</a> placed 6th.</p>
+
+<h3 id="challenge-description">Challenge Description:</h3>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Challenge instance ready at 95.216.233.106:57735
+
+We found a strange service, it looks like you can generate an access token for the network service, but you shouldn't be able to read the flag... We think.
+</code></pre></div></div>
+<h3 id="solving-">Solving :</h3>
+
+<p>We are given <a href="https://pastebin.com/3e9ryfvf">access.py</a>. Lets take a look the server file to see what the program does.</p>
+
+<p>From the top, we see that <code class="highlighter-rouge">get_flag</code>:</p>
+
+
+      <p class="post-continue"><a href="/2020/07/17/Access=0000/"><strong>Continue Reading »</strong></a></p>
+    </div>
+    
+  
+    
+    <div class="post">
+      <h1 class="post-title">
+        <a href="/2020/07/16/Really-Smart-Acronym/">
+          Really Smart Acronym
+        </a>
+      </h1>
+
+      <span class="post-date">16 Jul 2020</span>
+
+      <h3 id="challenge-description">Challenge Description:</h3>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Man, oracles are weird.
+
+nc challenges1.hexionteam.com 5000
+</code></pre></div></div>
+
+<h3 id="solving-"><strong>Solving :</strong></h3>
+
+<p>​Really Smart Acronym, of course, is RSA. Looking at the code, it uses PyCrypto to generate a RSA key to encrypt the flag. You also get one encryption and 1024 decrypts, but you only get the last bit of the decrypts. At first we thought it could be Franklin-Reiter related-message attack, but there is not enough information for that.</p>
+
+
+      <p class="post-continue"><a href="/2020/07/16/Really-Smart-Acronym/"><strong>Continue Reading »</strong></a></p>
+    </div>
+    
+  
+    
+    <div class="post">
+      <h1 class="post-title">
+        <a href="/2020/07/15/SSS/">
+          S.S.S.
+        </a>
+      </h1>
+
+      <span class="post-date">15 Jul 2020</span>
+
+      <p>This is a writeup for HexionCTF 2020, where <a href="https://rgbsec.xyz">we</a> placed third.</p>
+
+<h3 id="challenge-description">Challenge Description:</h3>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Math is so beautiful and can always be used for cryptographic
+encryption!
+nc challenges1.hexionteam.com 5001
+</code></pre></div></div>
+
+<h3 id="solving-">Solving :</h3>
+
+<p>We are given an sss.py. See <a href="https://pastebin.com/uYwhAUcX">here</a> for source.</p>
+
+<p>We found that SSS stands for Shamir’s Secret Sharing by copy-pasting the loop from <code class="highlighter-rouge">eval_at</code>, which brought me to <a href="https://en.wikipedia.org/wiki/Shamir's_Secret_Sharing">this</a> Wikipedia Page. Shamir Secret Sharing is based on polynomials and lagrange interpolation.</p>
+
+
+      <p class="post-continue"><a href="/2020/07/15/SSS/"><strong>Continue Reading »</strong></a></p>
+    </div>
+    
+  
+    
+    <div class="post">
+      <h1 class="post-title">
+        <a href="/2020/07/15/Hello-World!/">
+          Hello World!
+        </a>
+      </h1>
+
+      <span class="post-date">15 Jul 2020</span>
+
+      <p>During quarantine, I decided to make a blog (The Haven) to journal my thoughts and experiences.</p>
+
+<p>Happy Reading!</p>
+
+<p>Sincerely,</p>
+
+<p>Dylan</p>
+
+      <p class="post-continue"><a href="/2020/07/15/Hello-World!/"><strong>Continue Reading »</strong></a></p>
+    </div>
+    
+  
+</div>
+
+<div class="pagination">
+  
+    <span class="pagination-item older">Older</span>
+  
+  
+    <span class="pagination-item newer">Newer</span>
+  
+</div>
+
+    </div>
+
+  </body>
+</html>
