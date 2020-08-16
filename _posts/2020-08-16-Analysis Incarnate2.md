@@ -12,7 +12,7 @@ We can write `e^iphi` as the Taylor Series expansion.
 ![b](https://latex.codecogs.com/png.latex?\dpi{300}&space;\tiny&space;e^{i\phi}=\sum_{n=0}^{\infty}\frac{(i\phi)^{n}}{n!})
 
 Let's visualize this sum. It helps to write out all your terms because you know that the powers of `i` are going to alternate between `1`,`-1`,`i`,and `-i`.
-
+<!--more-->
 ![c](https://latex.codecogs.com/png.latex?\dpi{300}&space;\tiny&space;=\frac{\left(i\phi&space;\:\right)^0}{0!}&plus;\frac{\left(i\phi&space;\right)^1}{1!}&plus;\frac{\left(i\phi&space;\:\right)^2}{2!}&plus;\frac{\left(i\phi&space;\:\right)^3}{3!}&plus;\frac{\left(i\phi&space;\:\right)^4}{4!}&plus;...)
 
 If we simplify these terms using the powers of `i` rule,  we get : 
