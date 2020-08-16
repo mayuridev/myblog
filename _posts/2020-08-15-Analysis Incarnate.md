@@ -15,7 +15,7 @@ Using the quotient rule, we end up with :
 
 ![c](https://latex.codecogs.com/png.latex?\dpi{300}&space;\tiny&space;f\prime(x)=\frac{(cos\phi&plus;isin\phi)ie^{i\phi}-e^{i\phi}(-sin\phi&plus;icos\phi)}{(cos\phi&plus;isin\phi)^{2}})
 
-The derivative of f(x) being ie^(i*phi), and the derivative of g(x) being e^(i*phi). Let's focus on the numerator. Distributing the respective pairs, we get : 
+The derivative of f(x) being ie^(iphi), and the derivative of g(x) being e^(iphi). Let's focus on the numerator. Distributing the respective pairs, we get : 
 
 ![d](https://latex.codecogs.com/png.latex?\dpi{300}&space;\tiny&space;=e^{i\phi}(icos\phi-sin\phi&plus;sin\phi-icos\phi))
 
