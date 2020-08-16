@@ -21,7 +21,7 @@ The derivative of `f(x)` is `ie^(iphi)`, and the derivative of `g(x)` is `e^(iph
 
 ![e](https://latex.codecogs.com/png.latex?\dpi{300}&space;\tiny&space;=e^{i\phi}(0))
 
-As you can see, the derivative of f(x)=0, and the only function whose derivative is zero is a constant. Let's call our constant `c`. If we find a value for `c`, we know the value is the same for the entire equation, because it's a constant. If we plug "0" into the equation that we originally derived :
+As you can see, the derivative of `f(x)=0`, and the only function whose derivative is zero is a constant. Let's call our constant `c`. If we find a value for `c`, we know the value is the same for the entire equation, because it's a constant. If we plug "0" into the equation that we originally derived :
 
 ![f](https://latex.codecogs.com/png.latex?\dpi{300}&space;\tiny&space;f(0)=\frac&space;{e^{i0}}{cos0&plus;isin0}=\frac{1}{1})
 
