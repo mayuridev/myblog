@@ -3,7 +3,7 @@ title: 'Analysis Incarnate 2'
 
 ---
 
-This is a proof of Euler's Identity *using* the Taylor Series. 
+This is a proof of Euler's Identity using the Taylor Series. 
 
 ![a](https://latex.codecogs.com/png.latex?\dpi{300}&space;\tiny&space;e^{i\pi}&plus;1=0)
 
