@@ -12,14 +12,16 @@ We can write `e^iphi` as the Taylor Series expansion.
 ![b](https://latex.codecogs.com/png.latex?\dpi{300}&space;\tiny&space;e^{i\phi}=\sum_{n=0}^{\infty}\frac{(i\phi)^{n}}{n!})
 
 Let's visualize this sum. It helps to write out all your terms because you know that the powers of `i` are going to alternate between `1`,`-1`,`i`,and `-i`.
+
 <!--more-->
+
 ![c](https://latex.codecogs.com/png.latex?\dpi{300}&space;\tiny&space;=\frac{\left(i\phi&space;\:\right)^0}{0!}&plus;\frac{\left(i\phi&space;\right)^1}{1!}&plus;\frac{\left(i\phi&space;\:\right)^2}{2!}&plus;\frac{\left(i\phi&space;\:\right)^3}{3!}&plus;\frac{\left(i\phi&space;\:\right)^4}{4!}&plus;...)
 
 If we simplify these terms using the powers of `i` rule,  we get : 
 
 ![d](https://latex.codecogs.com/png.latex?\dpi{300}&space;\tiny&space;=\frac{1}{0!}&plus;i\left(\frac{\phi}{1!}\right)-\frac{\phi^2}{2!}-i\left(\frac{\phi^3}{3!}\right)&plus;\frac{\phi^4}{4!}&plus;...)
 
-`(iphi)^0/0!` is equal to `1/0!`, as anything raised to the `0` power is one, and `0` factorial is one. On the next term, we get `iphi` as the numerator, and `1!` as the denominator. On the third term,  `i^2` is just `-1`, so we get `-phi^2` over `2!`. On the fourth term, `i^3` is just `-1*i`, which is just `-i`. This is multiplied by `phi^3`/`3!`. This process goes on indefinitely. Since we have a complex number, we can factor out the `i` and compare co-efficients of the front and rear parts. 
+`(iphi)^0/0!` is equal to `1/0!`, as `(iphi)^0 = 1`, and `0!` is just itself. On the next term, we simplify to get `iphi/1!`. On the third term,  `i^2` is just `-1`, so we get `-phi^2/2!`. On the fourth term, `i^3` is equal to`-1*i`, or `-i`. The result is multiplied by `phi^3`/`3!`. This process, because the sum is up to infinity, goes on indefinitely. Since we have a complex number, we can factor out the `i` and compare co-efficients of the front and rear parts. 
 
 ![e](https://latex.codecogs.com/png.latex?\dpi{300}&space;\tiny&space;=\left(\frac{1}{0!}-\frac{\phi&space;^2}{2!}&plus;\frac{\phi&space;^4}{4!}-...\right)&plus;i\left(\frac{\phi&space;^1}{1!}-\frac{\phi&space;^3}{3!}&plus;\frac{\phi&space;^5}{5!}-...\right))
 
