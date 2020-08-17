@@ -29,7 +29,7 @@ As you can see, the addition/subtraction operators alternate after every term. T
 
 ![f](https://latex.codecogs.com/png.latex?\dpi{300}&space;\tiny&space;=cos(\phi)&plus;isin(\phi))
 
-We can see that `e^iphi` is equal to `cos phi` + `i sin phi` (Euler's formula). If you plug in `π` into this formula : 
+We can see that `e^iphi` is equal to `cos phi` + `i sin phi` (Euler's formula). If you substitute `π` into this formula : 
 
 ![g](https://latex.codecogs.com/png.latex?\dpi{300}&space;\tiny&space;e^{i\pi}=&space;cos(\pi)&plus;i&space;sin&space;(\pi))
 
