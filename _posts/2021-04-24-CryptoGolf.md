@@ -305,7 +305,7 @@ if __name__ == '__main__':
 
 > Flag: **ptm{sometimes_encryption_can_be_as_bad_as_decryption_ecdb556edcffd}**
 
-Thank you to team "pwnthem0le" from Politecnico di Torino for hosting such a fun event. Also special shoutout to my teammates Lior and Stanley for their work on this problem, we look forward to competing in future hosted CTFs and conferences :)
+Thank you to team "pwnthem0le" from Politecnico di Torino for hosting such a fun event. Also special shoutout to my teammates Lior and Stanley for their work on this problem. We look forward to competing in future hosted CTFs and conferences :)
 
 
 
