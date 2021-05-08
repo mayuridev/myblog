@@ -72,7 +72,7 @@ nc challenges1.hexionteam.com 5000
 
 <!--more-->
 
-<p><a href="https://crypto.stackexchange.com/questions/11053/rsa-least-significant-bit-oracle-attack">This thread</a> was one of the resources that we used to solve this problem. From there, the method is given, but we still need to find e and N for the attack to work. e is easy. Since it uses PyCrypto, <code class="language-plaintext highlighter-rouge">e = 65537</code>. As for N, that’s what the one encrypt is for. If you realize you can pass negative numbers for the encrypt, then it becomes easy. The encrypted message is <code class="language-plaintext highlighter-rouge">m^e mod N</code>, so if you pass <code class="language-plaintext highlighter-rouge">-1</code>, it becomes <code class="language-plaintext highlighter-rouge">-1^65537 mod N = N – 1</code>.</p>
+<p><a href="https://crypto.stackexchange.com/questions/11053/rsa-least-significant-bit-oracle-attack">This thread</a> was one of the resources that we used to solve this problem. From there, the method is given, but we still need to find e and N for the attack to work. e is easy. Since it uses PyCrypto, <code class="language-plaintext highlighter-rouge">e = 65537</code>. As for N, that’s what the one encrypt is for. If you realize you can pass negative numbers for the encrypt, then it becomes easy. The encrypted message is <code class="language-plaintext highlighter-rouge">m^e mod N</code>, so if you pass <code class="language-plaintext highlighter-rouge">-1</code>, it becomes $-1^{65537}$ mod N = N – 1`.</p>
 
 <h3 id="solve-script-"><strong>Solve Script :</strong></h3>
 

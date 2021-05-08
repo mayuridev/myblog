@@ -18,7 +18,7 @@ nc challenges1.hexionteam.com 5000
 
 <!--more-->
 
-[This thread](https://crypto.stackexchange.com/questions/11053/rsa-least-significant-bit-oracle-attack) was one of the resources that we used to solve this problem. From there, the method is given, but we still need to find e and N for the attack to work. e is easy. Since it uses PyCrypto, `e = 65537`. As for N, that’s what the one encrypt is for. If you realize you can pass negative numbers for the encrypt, then it becomes easy. The encrypted message is `m^e mod N`, so if you pass `-1`, it becomes `-1^65537 mod N = N – 1`.
+[This thread](https://crypto.stackexchange.com/questions/11053/rsa-least-significant-bit-oracle-attack) was one of the resources that we used to solve this problem. From there, the method is given, but we still need to find e and N for the attack to work. e is easy. Since it uses PyCrypto, `e = 65537`. As for N, that’s what the one encrypt is for. If you realize you can pass negative numbers for the encrypt, then it becomes easy. The encrypted message is `m^e mod N`, so if you pass `-1`, it becomes $-1^{65537}$ mod N = N – 1`.
 
 ### **Solve Script :** 
 
