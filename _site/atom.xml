@@ -4,7 +4,7 @@
  <title>The Haven</title>
  <link href="http://localhost:4000/atom.xml" rel="self"/>
  <link href="http://localhost:4000/"/>
- <updated>2021-05-07T21:25:11-07:00</updated>
+ <updated>2021-05-07T21:28:22-07:00</updated>
  <id>http://localhost:4000</id>
  <author>
    <name></name>
@@ -167,7 +167,7 @@ The encryption loop:&lt;/p&gt;
   &lt;/tbody&gt;
 &lt;/table&gt;
 
-&lt;p&gt;So we know that if we set &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;A&lt;/code&gt; to $2^i$, we get a power of 2 in &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;v&lt;/code&gt;, and a UNIQUE one, since based on the bijection t(t(t…($2^i$))) &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;!=&lt;/code&gt; t(t(t…($2^j$))) unless &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;j=i&lt;/code&gt;. The beautiful observation: We know &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;t(v)&lt;/code&gt; and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;v&lt;/code&gt;, and since v can span the entire bit range we can recover the indexes in the secret array. That would take precisely 128 queries, for every power of 2, but with the decryption challenge that would result in a total of 129 queries, where the limit is 128. However, after the 127th encryption, only one t value will be missing, so we can simply check what is missing and since t is a bijection what value of t we haven’t seen yet, and set that to the value of the missing v. Therefore, the entire process would take 127 + 1 == 128 queries, which is exactly &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;lim1&lt;/code&gt;!&lt;/p&gt;
+&lt;p&gt;So we know that if we set &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;A&lt;/code&gt; to $2^i$, we get a power of 2 in &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;v&lt;/code&gt;, and a UNIQUE one, since based on the bijection t(t(t…($2^i$ ))) &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;!=&lt;/code&gt; t(t(t…($2^j$ ))) unless &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;j=i&lt;/code&gt;. The beautiful observation: We know &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;t(v)&lt;/code&gt; and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;v&lt;/code&gt;, and since v can span the entire bit range we can recover the indexes in the secret array. That would take precisely 128 queries, for every power of 2, but with the decryption challenge that would result in a total of 129 queries, where the limit is 128. However, after the 127th encryption, only one t value will be missing, so we can simply check what is missing and since t is a bijection what value of t we haven’t seen yet, and set that to the value of the missing v. Therefore, the entire process would take 127 + 1 == 128 queries, which is exactly &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;lim1&lt;/code&gt;!&lt;/p&gt;
 
 &lt;h3 id=&quot;solving&quot;&gt;&lt;strong&gt;Solving&lt;/strong&gt;&lt;/h3&gt;
 &lt;p&gt;The algorithm:&lt;/p&gt;
