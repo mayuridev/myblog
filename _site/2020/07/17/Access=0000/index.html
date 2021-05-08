@@ -73,19 +73,19 @@ We found a strange service, it looks like you can generate an access token for t
 
 <p>From the top, we see that <code class="language-plaintext highlighter-rouge">get_flag</code>: 
 <!--more--></p>
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>def get_flag(token, iv):
-    token = bytes.fromhex(token)
-    iv = bytes.fromhex(iv)
-    try:
-        cipher = AES.new(KEY, AES.MODE_CBC, iv)
-        decrypted = cipher.decrypt(token)
-        unpadded = unpad(decrypted, 16)
-    except ValueError as e:
-        return {"error": str(e)}
-    if b"access=0000" in unpadded:
-        return {"flag": FLAG}
-    else:
-        return {"error": "not authorized to read flag"}
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">get_flag</span><span class="p">(</span><span class="n">token</span><span class="p">,</span> <span class="n">iv</span><span class="p">):</span>
+    <span class="n">token</span> <span class="o">=</span> <span class="nb">bytes</span><span class="p">.</span><span class="n">fromhex</span><span class="p">(</span><span class="n">token</span><span class="p">)</span>
+    <span class="n">iv</span> <span class="o">=</span> <span class="nb">bytes</span><span class="p">.</span><span class="n">fromhex</span><span class="p">(</span><span class="n">iv</span><span class="p">)</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">cipher</span> <span class="o">=</span> <span class="n">AES</span><span class="p">.</span><span class="n">new</span><span class="p">(</span><span class="n">KEY</span><span class="p">,</span> <span class="n">AES</span><span class="p">.</span><span class="n">MODE_CBC</span><span class="p">,</span> <span class="n">iv</span><span class="p">)</span>
+        <span class="n">decrypted</span> <span class="o">=</span> <span class="n">cipher</span><span class="p">.</span><span class="n">decrypt</span><span class="p">(</span><span class="n">token</span><span class="p">)</span>
+        <span class="n">unpadded</span> <span class="o">=</span> <span class="n">unpad</span><span class="p">(</span><span class="n">decrypted</span><span class="p">,</span> <span class="mi">16</span><span class="p">)</span>
+    <span class="k">except</span> <span class="nb">ValueError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="k">return</span> <span class="p">{</span><span class="s">"error"</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)}</span>
+    <span class="k">if</span> <span class="sa">b</span><span class="s">"access=0000"</span> <span class="ow">in</span> <span class="n">unpadded</span><span class="p">:</span>
+        <span class="k">return</span> <span class="p">{</span><span class="s">"flag"</span><span class="p">:</span> <span class="n">FLAG</span><span class="p">}</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="p">{</span><span class="s">"error"</span><span class="p">:</span> <span class="s">"not authorized to read flag"</span><span class="p">}</span>
 </code></pre></div></div>
 
 <p>1) converts <code class="language-plaintext highlighter-rouge">token</code> and <code class="language-plaintext highlighter-rouge">iv</code> to their representation as “bytes”</p>
@@ -98,15 +98,15 @@ We found a strange service, it looks like you can generate an access token for t
 
 <p>Below that is <code class="language-plaintext highlighter-rouge">generate_token</code>:</p>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>def generate_token():
-    expires_at = (datetime.today() + timedelta(days=1)).strftime("%s")
-    token = f"access=9999;expiry={expires_at}".encode()
-    iv = get_random_bytes(16)
-    padded = pad(token, 16)
-    cipher = AES.new(KEY, AES.MODE_CBC, iv)
-    encrypted = cipher.encrypt(padded)
-    ciphertext = iv.hex() + encrypted.hex()
-    return {"token": ciphertext}
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">generate_token</span><span class="p">():</span>
+    <span class="n">expires_at</span> <span class="o">=</span> <span class="p">(</span><span class="n">datetime</span><span class="p">.</span><span class="n">today</span><span class="p">()</span> <span class="o">+</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="mi">1</span><span class="p">)).</span><span class="n">strftime</span><span class="p">(</span><span class="s">"%s"</span><span class="p">)</span>
+    <span class="n">token</span> <span class="o">=</span> <span class="sa">f</span><span class="s">"access=9999;expiry=</span><span class="si">{</span><span class="n">expires_at</span><span class="si">}</span><span class="s">"</span><span class="p">.</span><span class="n">encode</span><span class="p">()</span>
+    <span class="n">iv</span> <span class="o">=</span> <span class="n">get_random_bytes</span><span class="p">(</span><span class="mi">16</span><span class="p">)</span>
+    <span class="n">padded</span> <span class="o">=</span> <span class="n">pad</span><span class="p">(</span><span class="n">token</span><span class="p">,</span> <span class="mi">16</span><span class="p">)</span>
+    <span class="n">cipher</span> <span class="o">=</span> <span class="n">AES</span><span class="p">.</span><span class="n">new</span><span class="p">(</span><span class="n">KEY</span><span class="p">,</span> <span class="n">AES</span><span class="p">.</span><span class="n">MODE_CBC</span><span class="p">,</span> <span class="n">iv</span><span class="p">)</span>
+    <span class="n">encrypted</span> <span class="o">=</span> <span class="n">cipher</span><span class="p">.</span><span class="n">encrypt</span><span class="p">(</span><span class="n">padded</span><span class="p">)</span>
+    <span class="n">ciphertext</span> <span class="o">=</span> <span class="n">iv</span><span class="p">.</span><span class="nb">hex</span><span class="p">()</span> <span class="o">+</span> <span class="n">encrypted</span><span class="p">.</span><span class="nb">hex</span><span class="p">()</span>
+    <span class="k">return</span> <span class="p">{</span><span class="s">"token"</span><span class="p">:</span> <span class="n">ciphertext</span><span class="p">}</span>
 </code></pre></div></div>
 
 <p>1) creates an expiration date</p>
@@ -133,17 +133,17 @@ We found a strange service, it looks like you can generate an access token for t
 
 <h3 id="solve-script-">Solve Script :</h3>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>token = '3913er43j134h6d4fk81df97h4812df315dfd978g62fuehf38173g7eba445g9833kj1371637h26hfa3khuy3j5vx948d0'
-token = bytes.fromhex(token)
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">token</span> <span class="o">=</span> <span class="s">'3913er43j134h6d4fk81df97h4812df315dfd978g62fuehf38173g7eba445g9833kj1371637h26hfa3khuy3j5vx948d0'</span>
+<span class="n">token</span> <span class="o">=</span> <span class="nb">bytes</span><span class="p">.</span><span class="n">fromhex</span><span class="p">(</span><span class="n">token</span><span class="p">)</span>
 
-iv = token[:16]
-ct = token[16:]
+<span class="n">iv</span> <span class="o">=</span> <span class="n">token</span><span class="p">[:</span><span class="mi">16</span><span class="p">]</span>
+<span class="n">ct</span> <span class="o">=</span> <span class="n">token</span><span class="p">[</span><span class="mi">16</span><span class="p">:]</span>
 
-for i in range(7,11):
-    iv = iv[:i] + bytes([(iv[i] ^ ord('0') ^ ord('9'))]) + iv[i+1:]
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span><span class="mi">11</span><span class="p">):</span>
+    <span class="n">iv</span> <span class="o">=</span> <span class="n">iv</span><span class="p">[:</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="nb">bytes</span><span class="p">([(</span><span class="n">iv</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">^</span> <span class="nb">ord</span><span class="p">(</span><span class="s">'0'</span><span class="p">)</span> <span class="o">^</span> <span class="nb">ord</span><span class="p">(</span><span class="s">'9'</span><span class="p">))])</span> <span class="o">+</span> <span class="n">iv</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">:]</span>
 
-print(iv.hex())
-print(ct.hex())
+<span class="k">print</span><span class="p">(</span><span class="n">iv</span><span class="p">.</span><span class="nb">hex</span><span class="p">())</span>
+<span class="k">print</span><span class="p">(</span><span class="n">ct</span><span class="p">.</span><span class="nb">hex</span><span class="p">())</span>
 </code></pre></div></div>
 
 <p>This script replaces <code class="language-plaintext highlighter-rouge">iv</code> with <code class="language-plaintext highlighter-rouge">iv XOR D</code>, so the first block of the plaintext will be decoded as <code class="language-plaintext highlighter-rouge">m[0] XOR D</code>. We can XOR our <code class="language-plaintext highlighter-rouge">iv</code> to change the guest token (<code class="language-plaintext highlighter-rouge">access=9999</code>) to the admin token (<code class="language-plaintext highlighter-rouge">access=0000</code>).</p>

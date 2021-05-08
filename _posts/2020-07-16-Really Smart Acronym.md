@@ -22,7 +22,7 @@ nc challenges1.hexionteam.com 5000
 
 ### **Solve Script :** 
 
-```
+```python
 from pwn import *
 
 sh = remote('challenges1.hexionteam.com', 5000)

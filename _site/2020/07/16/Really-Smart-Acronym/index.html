@@ -76,40 +76,40 @@ nc challenges1.hexionteam.com 5000
 
 <h3 id="solve-script-"><strong>Solve Script :</strong></h3>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>from pwn import *
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">pwn</span> <span class="kn">import</span> <span class="o">*</span>
 
-sh = remote('challenges1.hexionteam.com', 5000)
+<span class="n">sh</span> <span class="o">=</span> <span class="n">remote</span><span class="p">(</span><span class="s">'challenges1.hexionteam.com'</span><span class="p">,</span> <span class="mi">5000</span><span class="p">)</span>
 
-sh.recvuntil('Flag: ')
+<span class="n">sh</span><span class="p">.</span><span class="n">recvuntil</span><span class="p">(</span><span class="s">'Flag: '</span><span class="p">)</span>
 
-cipher = int(sh.recvline().decode().strip())
-#print(cipher)
+<span class="n">cipher</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">sh</span><span class="p">.</span><span class="n">recvline</span><span class="p">().</span><span class="n">decode</span><span class="p">().</span><span class="n">strip</span><span class="p">())</span>
+<span class="c1">#print(cipher)
+</span>
+<span class="n">sh</span><span class="p">.</span><span class="n">recvuntil</span><span class="p">(</span><span class="s">'m =&gt; '</span><span class="p">)</span>
+<span class="n">sh</span><span class="p">.</span><span class="n">sendline</span><span class="p">(</span><span class="s">'-1'</span><span class="p">)</span>
 
-sh.recvuntil('m =&gt; ')
-sh.sendline('-1')
+<span class="n">n</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">sh</span><span class="p">.</span><span class="n">recvline</span><span class="p">().</span><span class="n">decode</span><span class="p">().</span><span class="n">strip</span><span class="p">())</span> <span class="o">+</span> <span class="mi">1</span>
 
-n = int(sh.recvline().decode().strip()) + 1
+<span class="n">mult</span> <span class="o">=</span> <span class="nb">pow</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">65537</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span>
+<span class="c1">#print(mult)
+</span>
+<span class="k">def</span> <span class="nf">get_lsb</span><span class="p">(</span><span class="n">num</span><span class="p">):</span>
+	<span class="n">sh</span><span class="p">.</span><span class="n">recvuntil</span><span class="p">(</span><span class="s">'&gt; '</span><span class="p">)</span>
+	<span class="n">sh</span><span class="p">.</span><span class="n">sendline</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">num</span><span class="p">))</span>
+	<span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="n">sh</span><span class="p">.</span><span class="n">recvline</span><span class="p">().</span><span class="n">decode</span><span class="p">().</span><span class="n">strip</span><span class="p">())</span>
 
-mult = pow(2, 65537, n)
-#print(mult)
+<span class="n">high</span> <span class="o">=</span> <span class="n">n</span>
+<span class="n">low</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1024</span><span class="p">):</span>
+	<span class="n">cipher</span> <span class="o">*=</span> <span class="n">mult</span>
+	<span class="n">cipher</span> <span class="o">%=</span> <span class="n">n</span>
+	<span class="n">lsb</span> <span class="o">=</span> <span class="n">get_lsb</span><span class="p">(</span><span class="n">cipher</span><span class="p">)</span>
+	<span class="k">if</span> <span class="n">lsb</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+		<span class="n">high</span> <span class="o">=</span> <span class="p">(</span><span class="n">high</span> <span class="o">+</span> <span class="n">low</span><span class="p">)</span> <span class="o">//</span> <span class="mi">2</span>
+	<span class="k">else</span><span class="p">:</span>
+		<span class="n">low</span> <span class="o">=</span> <span class="p">(</span><span class="n">high</span> <span class="o">+</span> <span class="n">low</span><span class="p">)</span> <span class="o">//</span> <span class="mi">2</span>
 
-def get_lsb(num):
-	sh.recvuntil('&gt; ')
-	sh.sendline(str(num))
-	return int(sh.recvline().decode().strip())
-
-high = n
-low = 0
-for i in range(1024):
-	cipher *= mult
-	cipher %= n
-	lsb = get_lsb(cipher)
-	if lsb == 0:
-		high = (high + low) // 2
-	else:
-		low = (high + low) // 2
-
-print(high)
+<span class="k">print</span><span class="p">(</span><span class="n">high</span><span class="p">)</span>
 </code></pre></div></div>
 
 <p>Flag: <strong>hexCTF{n1c3_r5a_tr1ck5_m4t3}</strong></p>
