@@ -103,6 +103,7 @@ Our task is essentially the following: perform at most `lim1 – 1 `encryptions 
 
 One shall claim that t is a [bijection](https://en.wikipedia.org/wiki/Bijection#:~:text=In%20mathematics%2C%20a%20bijection%2C%20bijective,element%20of%20the%20first%20set) from the set `{2^i | 0 <= i <= 127}` to itself. Why? Well, based on our analysis of the function apply_secret, if we input to the function $2^i$, the $j^{th}$ bit (again, where MSB is 0) will be zero except when `secret[j] = 127 - i` (again, not `i` due to endianess ($2^{127}$ is every bit 0 except the MSB)). Secret is a PERMUTATION that spans 0 .. 127, therefore, there exists only a single unique `j` such that `secret[j] = 127 - i`. 
 
+
 Based on the above analysis, t($2^{127-i}$) == $2^{127-secret[i]}$ (since MSB is $2^{127}$, etc); note again that secret is a permutation of the index range, therefore this is a bijection, and in fact, a very useful one.
 
 

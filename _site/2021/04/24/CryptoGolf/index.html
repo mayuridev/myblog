@@ -16,9 +16,9 @@
   </title>
 
   <!-- CSS -->
-  <link rel="stylesheet" href="//public/css/poole.css ">
-  <link rel="stylesheet" href="//public/css/syntax.css ">
-  <link rel="stylesheet" href="//public/css/hyde.css ">
+  <link rel="stylesheet" href="/public/css/poole.css ">
+  <link rel="stylesheet" href="/public/css/syntax.css ">
+  <link rel="stylesheet" href="/public/css/hyde.css ">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
 
   <!-- Icons -->
@@ -154,7 +154,9 @@ nc challs.m0lecon.it 11000
 
 <p>Our task is essentially the following: perform at most <code class="language-plaintext highlighter-rouge">lim1 – 1 </code>encryptions and send the decrypted challenge, so we need to uncover the secret in 128 – 1 == 127 queries. <code class="language-plaintext highlighter-rouge">apply_secret(c)</code> essentially does the following: the $i^{th}$ bit of the output (where the MSB’s index is 0, etc) is <code class="language-plaintext highlighter-rouge">r[secret[i]]</code>, where <code class="language-plaintext highlighter-rouge">r</code> is the binary representation of the input block. The first key observation is the following: <code class="language-plaintext highlighter-rouge">secret</code> is a <strong>permutation</strong> of the numbers in range 0 .. 127, so every number in that range appears on it exactly <em>once and only once in a unique</em> position. The concept is to check what happens to a single 1 bit where all the rest of the bits are 0.</p>
 
-<p>One shall claim that t is a <a href="https://en.wikipedia.org/wiki/Bijection#:~:text=In%20mathematics%2C%20a%20bijection%2C%20bijective,element%20of%20the%20first%20set">bijection</a> from the set <code class="language-plaintext highlighter-rouge">{2^i | 0 &lt;= i &lt;= 127}</code> to itself. Why? Well, based on our analysis of the function apply_secret, if we input to the function $2^i$, the $j^{th}$ bit (again, where MSB is 0) will be zero except when <code class="language-plaintext highlighter-rouge">secret[j] = 127 - i</code> (again, not <code class="language-plaintext highlighter-rouge">i</code> due to endianess ($2^{127}$ is every bit 0 except the MSB)). Secret is a PERMUTATION that spans 0 .. 127, therefore, there exists only a single unique <code class="language-plaintext highlighter-rouge">j</code> such that <code class="language-plaintext highlighter-rouge">secret[j] = 127 - i</code>. Based on the above analysis, t($2^{127-i}$) == $2^{127-secret[i]}$ (since MSB is $2^{127}$, etc); note again that secret is a permutation of the index range, therefore this is a bijection, and in fact, a very useful one.</p>
+<p>One shall claim that t is a <a href="https://en.wikipedia.org/wiki/Bijection#:~:text=In%20mathematics%2C%20a%20bijection%2C%20bijective,element%20of%20the%20first%20set">bijection</a> from the set <code class="language-plaintext highlighter-rouge">{2^i | 0 &lt;= i &lt;= 127}</code> to itself. Why? Well, based on our analysis of the function apply_secret, if we input to the function $2^i$, the $j^{th}$ bit (again, where MSB is 0) will be zero except when <code class="language-plaintext highlighter-rouge">secret[j] = 127 - i</code> (again, not <code class="language-plaintext highlighter-rouge">i</code> due to endianess ($2^{127}$ is every bit 0 except the MSB)). Secret is a PERMUTATION that spans 0 .. 127, therefore, there exists only a single unique <code class="language-plaintext highlighter-rouge">j</code> such that <code class="language-plaintext highlighter-rouge">secret[j] = 127 - i</code>.</p>
+
+<p>Based on the above analysis, t($2^{127-i}$) == $2^{127-secret[i]}$ (since MSB is $2^{127}$, etc); note again that secret is a permutation of the index range, therefore this is a bijection, and in fact, a very useful one.</p>
 
 <h3 id="analysis"><strong>Analysis</strong></h3>
 <p>Now, one shall continue by performing an analysis of the encrypt function. Based on the shift arithmetic one can assume that we are working with 6 blocks, each containing 128 bits. Let us denote the blocks with <code class="language-plaintext highlighter-rouge">A</code>, <code class="language-plaintext highlighter-rouge">B</code>, <code class="language-plaintext highlighter-rouge">C</code>, <code class="language-plaintext highlighter-rouge">D</code>, <code class="language-plaintext highlighter-rouge">E</code>, <code class="language-plaintext highlighter-rouge">F</code>, where <code class="language-plaintext highlighter-rouge">A</code> is the most significant block.</p>
@@ -181,8 +183,11 @@ The encryption loop:</p>
 
 <p>One good technique when solving crypto challenges is to fix some controllable variables with “nice” values. one might intuitively try to set all the blocks except <code class="language-plaintext highlighter-rouge">A</code> to be 0, to avoid xoring a lot of blocks to simply the process a single bit. After 6 iterations, the process applied on <code class="language-plaintext highlighter-rouge">A</code>, <code class="language-plaintext highlighter-rouge">0</code>, <code class="language-plaintext highlighter-rouge">0</code>, <code class="language-plaintext highlighter-rouge">0</code>, <code class="language-plaintext highlighter-rouge">0</code>, <code class="language-plaintext highlighter-rouge">0</code> would result in the following block sequence:</p>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>t(t(t(t(t(t(A)))))), t(t(t(t(t(A))))), t(t(t(t(A)))), t(t(t(A))), t(t(A)), t(A)
-1                        2                  3            4          5         6
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>t(t(t(t(t(t(A)))))), t(t(t(t(t(A))))), t(t(t(t(A)))), 
+1                        2                  3    
+
+t(t(t(A))), t(t(A)), t(A)
+ 4          5         6
 </code></pre></div></div>
 
 <p>We know that after 3 more iterations, the last 3 blocks (least significant) will be:</p>
@@ -190,11 +195,9 @@ The encryption loop:</p>
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>t(t(t(t(t(t(A)))))), t(t(t(t(t(A))))), t(t(t(t(A))))
 </code></pre></div></div>
 
-<p>Substitute <code class="language-plaintext highlighter-rouge">v = t(t(t(t(A))))</code>, then the last 3 blocks are essentially <code class="language-plaintext highlighter-rouge">t(t(v)), t(v), v</code>.</p>
+<p>Substitute <code class="language-plaintext highlighter-rouge">v = t(t(t(t(A))))</code>, then the last 3 blocks are essentially <code class="language-plaintext highlighter-rouge">t(t(v)), t(v), v</code>. Now, since <code class="language-plaintext highlighter-rouge">t</code> is a bijection from the set <code class="language-plaintext highlighter-rouge">{2^i| 0 &lt;= i &lt;= 127}</code> to itself, then <code class="language-plaintext highlighter-rouge">t(t(t(...))</code> iterated for any amount of times is a bijection from the set <code class="language-plaintext highlighter-rouge">{2^i | 0 &lt;= i &lt;= 127}</code> to itself as well. (because it receives values that span the index range and outputs them, the output set is the same as the input set).</p>
 
-<p>Now, since <code class="language-plaintext highlighter-rouge">t</code> is a bijection from the set <code class="language-plaintext highlighter-rouge">{2^i| 0 &lt;= i &lt;= 127}</code> to itself, then <code class="language-plaintext highlighter-rouge">t(t(t(...))</code> iterated for any amount of times is a bijection from the set <code class="language-plaintext highlighter-rouge">{2^i | 0 &lt;= i &lt;= 127}</code> to itself as well. (because it receives values that span the index range and outputs them, the output set is the same as the input set).</p>
-
-<p>So we know that if we set <code class="language-plaintext highlighter-rouge">A</code> to $2^i$, we get a power of 2 in <code class="language-plaintext highlighter-rouge">v</code>, and a UNIQUE one, since based on the bijection t(t(t…($2^i$ ))) <code class="language-plaintext highlighter-rouge">!=</code> t(t(t…($2^{j}$ ))) unless <code class="language-plaintext highlighter-rouge">j=i</code>. The beautiful observation: We know <code class="language-plaintext highlighter-rouge">t(v)</code> and <code class="language-plaintext highlighter-rouge">v</code>, and since v can span the entire bit range we can recover the indexes in the secret array. That would take precisely 128 queries, for every power of 2, but with the decryption challenge that would result in a total of 129 queries, where the limit is 128. However, after the 127th encryption, only one t value will be missing, so we can simply check what is missing and since t is a bijection what value of t we haven’t seen yet, and set that to the value of the missing v. Therefore, the entire process would take 127 + 1 == 128 queries, which is exactly <code class="language-plaintext highlighter-rouge">lim1</code>!</p>
+<p>So we know that if we set <code class="language-plaintext highlighter-rouge">A</code> to $2^i$, we get a power of 2 in <code class="language-plaintext highlighter-rouge">v</code>, and a UNIQUE one, since based on the bijection t(t(t…( $2^i$ ))) <code class="language-plaintext highlighter-rouge">!=</code> t(t(t…( $2^{j}$ ))) unless <code class="language-plaintext highlighter-rouge">j=i</code>. The beautiful observation: We know <code class="language-plaintext highlighter-rouge">t(v)</code> and <code class="language-plaintext highlighter-rouge">v</code>, and since v can span the entire bit range we can recover the indexes in the secret array. That would take precisely 128 queries, for every power of 2, but with the decryption challenge that would result in a total of 129 queries, where the limit is 128. However, after the 127th encryption, only one t value will be missing, so we can simply check what is missing and since t is a bijection what value of t we haven’t seen yet, and set that to the value of the missing v. Therefore, the entire process would take 127 + 1 == 128 queries, which is exactly <code class="language-plaintext highlighter-rouge">lim1</code>!</p>
 
 <h3 id="solving"><strong>Solving</strong></h3>
 <p>The algorithm:</p>
