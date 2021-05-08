@@ -9,6 +9,7 @@ Description:
 nc challs.m0lecon.it 11000
 ```
 
+
 ### **Foreword**
 CryptoGolf was the first challenge of a series of very fun and *interesting* cryptography challenges that my teammates and I solved in [m0leconCTF World Quals](https://ctftime.org/event/1025) where [we](https://rgbsec.org) placed 5th globally in the Open Division, qualifying for the Grand Finals in Turin, Italy. 
 
@@ -100,8 +101,8 @@ for _ in range(1024):
 
 Our task is essentially the following: perform at most `lim1 – 1 `encryptions and send the decrypted challenge, so we need to uncover the secret in 128 – 1 == 127 queries. ```apply_secret(c)``` essentially does the following: the `ith` bit of the output (where the MSB’s index is 0, etc) is ```r[secret[i]]```, where `r` is the binary representation of the input block. The first key observation is the following: `secret` is a **permutation** of the numbers in range 0 .. 127, so every number in that range appears on it exactly *once and only once in a unique* position. The concept is to check what happens to a single 1 bit where all the rest of the bits are 0.  
 
-One shall claim that t is a [bijection](https://en.wikipedia.org/wiki/Bijection#:~:text=In%20mathematics%2C%20a%20bijection%2C%20bijective,element%20of%20the%20first%20set) from the set `{2^i | 0 <= i <= 127}` to itself. Why? Well, based on our analysis of the function apply_secret, if we input to the function `2^i`, the `jth` bit (again, where MSB is 0) will be zero except when `secret[j] = 127 - i` (again, not `i` due to endianess (`2^127` is every bit 0 except the MSB)). Secret is a PERMUTATION that spans 0 .. 127, therefore, there exists only a single unique `j` such that `secret[j] = 127 - i`. 
-Based on the above analysis, `t(2^(127-i)) == 2^(127-secret[i])` (since MSB is `2^127`, etc); note again that secret is a permutation of the index range, therefore this is a bijection, and in fact, a very useful one.
+One shall claim that t is a [bijection](https://en.wikipedia.org/wiki/Bijection#:~:text=In%20mathematics%2C%20a%20bijection%2C%20bijective,element%20of%20the%20first%20set) from the set {$2^i$ | 0 <= `i` <= 127} to itself. Why? Well, based on our analysis of the function apply_secret, if we input to the function $2^i$, the `jth` bit (again, where MSB is 0) will be zero except when `secret[j] = 127 - i` (again, not `i` due to endianess ($2^{127}$ is every bit 0 except the MSB)). Secret is a PERMUTATION that spans 0 .. 127, therefore, there exists only a single unique `j` such that `secret[j] = 127 - i`. 
+Based on the above analysis, t($2^{127-i}$) == $2^{127-secret[i]}$ (since MSB is $2^{127}$, etc); note again that secret is a permutation of the index range, therefore this is a bijection, and in fact, a very useful one.
 
 
 ### **Analysis**
@@ -144,9 +145,9 @@ t(t(t(t(t(t(A)))))), t(t(t(t(t(A))))), t(t(t(t(A))))
 
 Substitute `v = t(t(t(t(A))))`, then the last 3 blocks are essentially `t(t(v)), t(v), v`. 
 
-Now, since `t` is a bijection from the set `{2^i| 0 <= i <= 127}` to itself, then `t(t(t(...))` iterated for any amount of times is a bijection from the set `{2^i | 0 <= i <= 127}` to itself as well. (because it receives values that span the index range and outputs them, the output set is the same as the input set).
+Now, since `t` is a bijection from the set {$2^i$| 0 <= `i` <= 127} to itself, then `t(t(t(...))` iterated for any amount of times is a bijection from the set {$2^i$ | 0 <= `i` <= 127} to itself as well. (because it receives values that span the index range and outputs them, the output set is the same as the input set).
 
-So we know that if we set `A` to `2^i`, we get a power of 2 in `v`, and a UNIQUE one, since based on the bijection `t(t(t...(2^i)))` != `t(t(t...(2^j)))` unless j=i. The beautiful observation: We know `t(v)` and `v`, and since v can span the entire bit range we can recover the indexes in the secret array. That would take precisely 128 queries, for every power of 2, but with the decryption challenge that would result in a total of 129 queries, where the limit is 128. However, after the 127th encryption, only one t value will be missing, so we can simply check what is missing and since t is a bijection what value of t we haven't seen yet, and set that to the value of the missing v. Therefore, the entire process would take 127 + 1 == 128 queries, which is exactly `lim1`!
+So we know that if we set `A` to $2^i$, we get a power of 2 in `v`, and a UNIQUE one, since based on the bijection t(t(t...($2^i$))) `!=` t(t(t...($2^j$))) unless `j=i`. The beautiful observation: We know `t(v)` and `v`, and since v can span the entire bit range we can recover the indexes in the secret array. That would take precisely 128 queries, for every power of 2, but with the decryption challenge that would result in a total of 129 queries, where the limit is 128. However, after the 127th encryption, only one t value will be missing, so we can simply check what is missing and since t is a bijection what value of t we haven't seen yet, and set that to the value of the missing v. Therefore, the entire process would take 127 + 1 == 128 queries, which is exactly `lim1`!
 
 ### **Solving**
 The algorithm:

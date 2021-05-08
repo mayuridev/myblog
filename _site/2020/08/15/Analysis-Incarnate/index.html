@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title>
+    
+      Analysis Incarnate &middot; The Haven
+    
+  </title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="//public/css/poole.css ">
+  <link rel="stylesheet" href="//public/css/syntax.css ">
+  <link rel="stylesheet" href="//public/css/hyde.css ">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
+
+  <!-- Icons -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/public/apple-touch-icon-144-precomposed.png">
+                                 <link rel="shortcut icon" href="/public/favicon.ico">
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+  <!--<link rel="stylesheet" href="//public/css/syntax.css ">
+  <link rel="stylesheet" href="//public/css/hyde.css ">-->
+</head>
+
+
+  <body>
+    <div class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <h1>
+        <a href="/">
+          The Haven
+        </a>
+      </h1>
+      <p class="lead">a journal of thoughts</p>
+    </div>
+
+    <nav class="sidebar-nav">
+      <a class="sidebar-nav-item" href="/allposts">All Posts</a>
+        <a style="text-indent: 10px" class="sidebar-nav-item" href="/cybersec">CyberSecurity</a>
+        <a style="text-indent: 10px" class="sidebar-nav-item" href="/misc">Miscellaneous</a>
+      <a class="sidebar-nav-item" href="https://dylaniskandar.com">About Me</a>
+    </nav>
+
+    <p>&copy; 2020 Dylan Iskandar.</p>
+  </div>
+</div>
+
+    <div class="content container">
+      <div class="post">
+  <h1 class="post-title">Analysis Incarnate</h1>
+  <span class="post-date">15 Aug 2020</span>
+  <p>This is a quick proof of Euler’s formula without the use of the Taylor Series.</p>
+
+<p><img src="https://latex.codecogs.com/png.latex?\dpi{300}&space;\tiny&space;e^{i\phi}&space;=&space;cos&space;\phi&space;&plus;&space;i&space;sin\phi" alt="a" /></p>
+
+<p>Even with the imaginary number <code class="language-plaintext highlighter-rouge">i</code>, this equation is differentiable, so we can take the derivative of :</p>
+
+<p><img src="https://latex.codecogs.com/png.latex?\dpi{300}&space;\tiny&space;f(x)=\frac{e^{i\phi}}{cos\phi&plus;isin\phi}" alt="b" />
+<!--more-->
+Using the quotient rule, we end up with :</p>
+
+<p><img src="https://latex.codecogs.com/png.latex?\dpi{300}&space;\tiny&space;f\prime(x)=\frac{(cos\phi&plus;isin\phi)ie^{i\phi}-e^{i\phi}(-sin\phi&plus;icos\phi)}{(cos\phi&plus;isin\phi)^{2}}" alt="c" /></p>
+
+<p>The derivative of <code class="language-plaintext highlighter-rouge">f(x)</code> is $ie^{i\phi}$, and the derivative of <code class="language-plaintext highlighter-rouge">g(x)</code> is $e^{i\phi}$. Let’s focus on the numerator. Distributing the respective pairs, we get :</p>
+
+<p><img src="https://latex.codecogs.com/png.latex?\dpi{300}&space;\tiny&space;=e^{i\phi}(icos\phi-sin\phi&plus;sin\phi-icos\phi)" alt="d" /></p>
+
+<p><img src="https://latex.codecogs.com/png.latex?\dpi{300}&space;\tiny&space;=e^{i\phi}(0)" alt="e" /></p>
+
+<p>As you can see, the derivative of <code class="language-plaintext highlighter-rouge">f(x)=0</code>, and the only function whose derivative is zero is a constant. Let’s call our constant <code class="language-plaintext highlighter-rouge">c</code>. If we find a value for <code class="language-plaintext highlighter-rouge">c</code>, we know the value is the same for the entire equation, because it’s a constant. If we plug “0” into the equation that we originally derived :</p>
+
+<p><img src="https://latex.codecogs.com/png.latex?\dpi{300}&space;\tiny&space;f(0)=\frac&space;{e^{i0}}{cos0&plus;isin0}=\frac{1}{1}" alt="f" /></p>
+
+<p>After simplifying, we end up with (1/1), because $e^{i0}$ is one, $isin(0)$ is zero, and $cos(0)$ is one. Since we know that <code class="language-plaintext highlighter-rouge">c</code> is a constant, the value of <code class="language-plaintext highlighter-rouge">f(x)</code> remains the same.</p>
+
+<p><img src="https://latex.codecogs.com/png.latex?\dpi{300}&space;\tiny&space;f(x)=\frac&space;{e^{i\phi}}{cos\phi&plus;isin\phi}=1" alt="g" /></p>
+
+<p>After we simplify, we are done :)</p>
+
+<p><img src="https://latex.codecogs.com/png.latex?\dpi{300}&space;\tiny&space;e^{i\phi}=cos\phi&plus;isin\phi" alt="h" /></p>
+
+</div>
+
+<div class="related">
+  <h2>Related Posts</h2>
+  <ul class="related-posts">
+    
+      <li>
+        <h3>
+          <a href="/2021/04/24/CryptoGolf/">
+            CryptoGolf
+            <small>24 Apr 2021</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/2020/08/16/Analysis-Incarnate2/">
+            Analysis Incarnate 2
+            <small>16 Aug 2020</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/2020/07/17/Access=0000/">
+            Access=0000
+            <small>17 Jul 2020</small>
+          </a>
+        </h3>
+      </li>
+    
+  </ul>
+</div>
+
+
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<script>
+  MathJax = {
+    tex: {
+      inlineMath: [['$', '$'], ['\\(', '\\)']]
+    }
+  };
+  </script>
+  <script id="MathJax-script" async
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+  </script>
+    </div>
+
+  </body>
+</html>
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<script>
+  MathJax = {
+    tex: {
+      inlineMath: [['$', '$'], ['\\(', '\\)']]
+    }
+  };
+  </script>
+  <script id="MathJax-script" async
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+  </script>

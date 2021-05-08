@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title>
+    
+      Analysis Incarnate 2 &middot; The Haven
+    
+  </title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="//public/css/poole.css ">
+  <link rel="stylesheet" href="//public/css/syntax.css ">
+  <link rel="stylesheet" href="//public/css/hyde.css ">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
+
+  <!-- Icons -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/public/apple-touch-icon-144-precomposed.png">
+                                 <link rel="shortcut icon" href="/public/favicon.ico">
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+  <!--<link rel="stylesheet" href="//public/css/syntax.css ">
+  <link rel="stylesheet" href="//public/css/hyde.css ">-->
+</head>
+
+
+  <body>
+    <div class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <h1>
+        <a href="/">
+          The Haven
+        </a>
+      </h1>
+      <p class="lead">a journal of thoughts</p>
+    </div>
+
+    <nav class="sidebar-nav">
+      <a class="sidebar-nav-item" href="/allposts">All Posts</a>
+        <a style="text-indent: 10px" class="sidebar-nav-item" href="/cybersec">CyberSecurity</a>
+        <a style="text-indent: 10px" class="sidebar-nav-item" href="/misc">Miscellaneous</a>
+      <a class="sidebar-nav-item" href="https://dylaniskandar.com">About Me</a>
+    </nav>
+
+    <p>&copy; 2020 Dylan Iskandar.</p>
+  </div>
+</div>
+
+    <div class="content container">
+      <div class="post">
+  <h1 class="post-title">Analysis Incarnate 2</h1>
+  <span class="post-date">16 Aug 2020</span>
+  <p>This is a proof of Euler’s Identity using the Taylor Series.</p>
+
+<p><img src="https://latex.codecogs.com/png.latex?\dpi{300}&space;\tiny&space;e^{i\pi}&plus;1=0" alt="a" /></p>
+
+<p>We can write $ie^{i\phi}$ as the Taylor Series expansion.</p>
+
+<p><img src="https://latex.codecogs.com/png.latex?\dpi{300}&space;\tiny&space;e^{i\phi}=\sum_{n=0}^{\infty}\frac{(i\phi)^{n}}{n!}" alt="b" /></p>
+
+<p>Let’s visualize this sum. It helps to write out all your terms because you know that the powers of <code class="language-plaintext highlighter-rouge">i</code> are going to alternate between <code class="language-plaintext highlighter-rouge">1</code>,<code class="language-plaintext highlighter-rouge">-1</code>,<code class="language-plaintext highlighter-rouge">i</code>,and <code class="language-plaintext highlighter-rouge">-i</code>.</p>
+
+<!--more-->
+
+<p><img src="https://latex.codecogs.com/png.latex?\dpi{300}&space;\tiny&space;=\frac{\left(i\phi&space;\:\right)^0}{0!}&plus;\frac{\left(i\phi&space;\right)^1}{1!}&plus;\frac{\left(i\phi&space;\:\right)^2}{2!}&plus;\frac{\left(i\phi&space;\:\right)^3}{3!}&plus;\frac{\left(i\phi&space;\:\right)^4}{4!}&plus;..." alt="c" /></p>
+
+<p>If we simplify these terms using the powers of <code class="language-plaintext highlighter-rouge">i</code> rule,  we get :</p>
+
+<p><img src="https://latex.codecogs.com/png.latex?\dpi{300}&space;\tiny&space;=\frac{1}{0!}&plus;i\left(\frac{\phi}{1!}\right)-\frac{\phi^2}{2!}-i\left(\frac{\phi^3}{3!}\right)&plus;\frac{\phi^4}{4!}&plus;..." alt="d" /></p>
+
+<p><code class="language-plaintext highlighter-rouge">(iphi)^0/0!</code> is equal to <code class="language-plaintext highlighter-rouge">1/0!</code>, as <code class="language-plaintext highlighter-rouge">(iphi)^0 = 1</code>, and <code class="language-plaintext highlighter-rouge">0!</code> is just itself. On the next term, we simplify to get <code class="language-plaintext highlighter-rouge">iphi/1!</code>. On the third term,  <code class="language-plaintext highlighter-rouge">i^2</code> is just <code class="language-plaintext highlighter-rouge">-1</code>, so we get <code class="language-plaintext highlighter-rouge">-phi^2/2!</code>. On the fourth term, <code class="language-plaintext highlighter-rouge">i^3</code> = <code class="language-plaintext highlighter-rouge">-1*i</code>, or <code class="language-plaintext highlighter-rouge">-i</code>. The result is multiplied by <code class="language-plaintext highlighter-rouge">phi^3</code>/<code class="language-plaintext highlighter-rouge">3!</code>. This process, because the sum is up to infinity, goes on indefinitely. Since we have a complex number, we can factor out the <code class="language-plaintext highlighter-rouge">i</code> and compare co-efficients of the front and rear parts.</p>
+
+<p><img src="https://latex.codecogs.com/png.latex?\dpi{300}&space;\tiny&space;=\left(\frac{1}{0!}-\frac{\phi&space;^2}{2!}&plus;\frac{\phi&space;^4}{4!}-...\right)&plus;i\left(\frac{\phi&space;^1}{1!}-\frac{\phi&space;^3}{3!}&plus;\frac{\phi&space;^5}{5!}-...\right)" alt="e" /></p>
+
+<p>As you can see, the addition/subtraction operators alternate after every term. The front half of this equation is the Taylor Series expansion of <code class="language-plaintext highlighter-rouge">cos phi</code>. The rear half of this equation is the Taylor Series expansion of <code class="language-plaintext highlighter-rouge">sin phi</code>. You can take the original sum notation and split it into two partial sums, one with the even part, and one with the odd part.</p>
+
+<p><img src="https://latex.codecogs.com/png.latex?\dpi{300}&space;\tiny&space;=cos(\phi)&plus;isin(\phi)" alt="f" /></p>
+
+<p>We can see that <code class="language-plaintext highlighter-rouge">e^iphi</code> is equal to <code class="language-plaintext highlighter-rouge">cos phi</code> + <code class="language-plaintext highlighter-rouge">i sin phi</code> (Euler’s formula). If you substitute <code class="language-plaintext highlighter-rouge">π</code> into this formula :</p>
+
+<p><img src="https://latex.codecogs.com/png.latex?\dpi{300}&space;\tiny&space;e^{i\pi}=&space;cos(\pi)&plus;i&space;sin&space;(\pi)" alt="g" /></p>
+
+<p><img src="https://latex.codecogs.com/png.latex?\dpi{300}&space;\tiny&space;=&space;-1&plus;0" alt="h" /></p>
+
+<p><code class="language-plaintext highlighter-rouge">cos(π)</code> is equal to <code class="language-plaintext highlighter-rouge">-1</code> and <code class="language-plaintext highlighter-rouge">i sin (π)</code> is just <code class="language-plaintext highlighter-rouge">0</code> (think of the unit circle!). This leaves us with the most “beautiful” formula in mathematics :</p>
+
+  																			 <img src="https://latex.codecogs.com/png.latex?\dpi{300}&space;\tiny&space;e^{i\pi}&plus;1=&space;0" alt="k" />
+
+</div>
+
+<div class="related">
+  <h2>Related Posts</h2>
+  <ul class="related-posts">
+    
+      <li>
+        <h3>
+          <a href="/2021/04/24/CryptoGolf/">
+            CryptoGolf
+            <small>24 Apr 2021</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/2020/08/15/Analysis-Incarnate/">
+            Analysis Incarnate
+            <small>15 Aug 2020</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/2020/07/17/Access=0000/">
+            Access=0000
+            <small>17 Jul 2020</small>
+          </a>
+        </h3>
+      </li>
+    
+  </ul>
+</div>
+
+
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<script>
+  MathJax = {
+    tex: {
+      inlineMath: [['$', '$'], ['\\(', '\\)']]
+    }
+  };
+  </script>
+  <script id="MathJax-script" async
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+  </script>
+    </div>
+
+  </body>
+</html>
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<script>
+  MathJax = {
+    tex: {
+      inlineMath: [['$', '$'], ['\\(', '\\)']]
+    }
+  };
+  </script>
+  <script id="MathJax-script" async
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+  </script>

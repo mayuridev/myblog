@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title>
+    
+      CryptoGolf &middot; The Haven
+    
+  </title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="//public/css/poole.css ">
+  <link rel="stylesheet" href="//public/css/syntax.css ">
+  <link rel="stylesheet" href="//public/css/hyde.css ">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
+
+  <!-- Icons -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/public/apple-touch-icon-144-precomposed.png">
+                                 <link rel="shortcut icon" href="/public/favicon.ico">
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+  <!--<link rel="stylesheet" href="//public/css/syntax.css ">
+  <link rel="stylesheet" href="//public/css/hyde.css ">-->
+</head>
+
+
+  <body>
+    <div class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <h1>
+        <a href="/">
+          The Haven
+        </a>
+      </h1>
+      <p class="lead">a journal of thoughts</p>
+    </div>
+
+    <nav class="sidebar-nav">
+      <a class="sidebar-nav-item" href="/allposts">All Posts</a>
+        <a style="text-indent: 10px" class="sidebar-nav-item" href="/cybersec">CyberSecurity</a>
+        <a style="text-indent: 10px" class="sidebar-nav-item" href="/misc">Miscellaneous</a>
+      <a class="sidebar-nav-item" href="https://dylaniskandar.com">About Me</a>
+    </nav>
+
+    <p>&copy; 2020 Dylan Iskandar.</p>
+  </div>
+</div>
+
+    <div class="content container">
+      <div class="post">
+  <h1 class="post-title">CryptoGolf</h1>
+  <span class="post-date">24 Apr 2021</span>
+  <h3 id="challenge-description">Challenge Description:</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Description: 
+nc challs.m0lecon.it 11000
+</code></pre></div></div>
+
+<h3 id="foreword"><strong>Foreword</strong></h3>
+<p>CryptoGolf was the first challenge of a series of very fun and <em>interesting</em> cryptography challenges that my teammates and I solved in <a href="https://ctftime.org/event/1025">m0leconCTF World Quals</a> where <a href="https://rgbsec.org">we</a> placed 5th globally in the Open Division, qualifying for the Grand Finals in Turin, Italy.</p>
+
+<!--more-->
+<h3 id="introduction"><strong>Introduction</strong></h3>
+<p>We are given <code class="language-plaintext highlighter-rouge">server.py</code>:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">random</span>
+<span class="kn">import</span> <span class="nn">hashlib</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+
+<span class="n">p</span> <span class="o">=</span> <span class="s">''</span><span class="p">.</span><span class="n">join</span><span class="p">(</span><span class="n">random</span><span class="p">.</span><span class="n">choice</span><span class="p">(</span><span class="s">'0123456789abcdef'</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">6</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="s">"Give me a string such that its sha256sum ends in {}."</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="n">p</span><span class="p">))</span>
+<span class="n">l</span> <span class="o">=</span> <span class="nb">input</span><span class="p">().</span><span class="n">strip</span><span class="p">()</span>
+<span class="k">if</span> <span class="n">hashlib</span><span class="p">.</span><span class="n">sha256</span><span class="p">(</span><span class="n">l</span><span class="p">.</span><span class="n">encode</span><span class="p">(</span><span class="s">'ascii'</span><span class="p">)).</span><span class="n">hexdigest</span><span class="p">()[</span><span class="o">-</span><span class="mi">6</span><span class="p">:]</span> <span class="o">!=</span> <span class="n">p</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">"Wrong PoW"</span><span class="p">)</span>
+    <span class="n">sys</span><span class="p">.</span><span class="nb">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+
+<span class="kn">from</span> <span class="nn">secrets</span> <span class="kn">import</span> <span class="n">flag1</span><span class="p">,</span> <span class="n">flag2</span><span class="p">,</span> <span class="n">lim1</span><span class="p">,</span> <span class="n">lim2</span>
+
+</code></pre></div></div>
+
+<p>Note from writeup writers: limits were actually imported from a file that was not given. Their values were released as a hint, so we added their known specified values here:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">lim1</span> <span class="o">=</span> <span class="mi">128</span>
+<span class="n">lim2</span> <span class="o">=</span> <span class="mi">45</span>
+<span class="kn">import</span> <span class="nn">binascii</span>
+<span class="kn">import</span> <span class="nn">string</span>
+<span class="kn">import</span> <span class="nn">numpy</span>
+
+<span class="n">letters</span> <span class="o">=</span> <span class="n">string</span><span class="p">.</span><span class="n">ascii_lowercase</span> <span class="o">+</span> <span class="n">string</span><span class="p">.</span><span class="n">ascii_uppercase</span>
+<span class="n">secret</span> <span class="o">=</span> <span class="n">numpy</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="n">permutation</span><span class="p">(</span><span class="mi">128</span><span class="p">)</span>
+<span class="n">chall</span> <span class="o">=</span> <span class="s">''</span><span class="p">.</span><span class="n">join</span><span class="p">(</span><span class="n">random</span><span class="p">.</span><span class="n">choice</span><span class="p">(</span><span class="n">letters</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">96</span><span class="p">))</span>
+
+<span class="k">def</span> <span class="nf">pad</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
+    <span class="n">m</span> <span class="o">=</span> <span class="mi">192</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">s</span> <span class="o">+</span> <span class="nb">hex</span><span class="p">(</span><span class="n">m</span> <span class="o">%</span> <span class="mi">16</span><span class="p">)[</span><span class="mi">2</span><span class="p">:]</span> <span class="o">*</span> <span class="n">m</span>
+
+<span class="k">def</span> <span class="nf">apply_secret</span><span class="p">(</span><span class="n">c</span><span class="p">):</span>
+    <span class="n">r</span> <span class="o">=</span> <span class="nb">bin</span><span class="p">(</span><span class="n">c</span><span class="p">)[</span><span class="mi">2</span><span class="p">:].</span><span class="n">rjust</span><span class="p">(</span><span class="mi">128</span><span class="p">,</span><span class="s">'0'</span><span class="p">)</span>
+    <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="s">''</span><span class="p">.</span><span class="n">join</span><span class="p">([</span><span class="nb">str</span><span class="p">(</span><span class="n">r</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">secret</span><span class="p">]),</span> <span class="mi">2</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">encrypt</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
+    <span class="n">s</span> <span class="o">=</span> <span class="n">pad</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+    <span class="n">to_encrypt</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="mi">16</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">9</span><span class="p">):</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">apply_secret</span><span class="p">(</span><span class="n">to_encrypt</span> <span class="o">&gt;&gt;</span> <span class="mi">640</span><span class="p">)</span>
+        <span class="n">to_encrypt</span> <span class="o">=</span> <span class="p">(((</span><span class="n">x</span><span class="o">^</span><span class="n">to_encrypt</span><span class="p">)</span> <span class="o">&amp;</span> <span class="mh">0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="mi">640</span><span class="p">)</span> <span class="o">|</span> <span class="p">(</span><span class="n">to_encrypt</span> <span class="o">&gt;&gt;</span> <span class="mi">128</span><span class="p">)</span>
+    <span class="k">return</span> <span class="nb">hex</span><span class="p">(</span><span class="n">to_encrypt</span><span class="p">)[</span><span class="mi">2</span><span class="p">:]</span>
+
+<span class="k">print</span><span class="p">(</span><span class="s">"Encrypted challenge (hex):"</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">encrypt</span><span class="p">(</span><span class="n">binascii</span><span class="p">.</span><span class="n">hexlify</span><span class="p">(</span><span class="n">chall</span><span class="p">.</span><span class="n">encode</span><span class="p">()).</span><span class="n">decode</span><span class="p">()))</span>
+<span class="n">req</span> <span class="o">=</span> <span class="mi">0</span>
+
+<span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1024</span><span class="p">):</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">"What do you want to do?"</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">"1. Encrypt something"</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">"2. Give me the decrypted challenge"</span><span class="p">)</span>
+    <span class="n">ans</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">input</span><span class="p">())</span>
+    <span class="k">if</span> <span class="n">ans</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">"Give me something to encrypt (hex):"</span><span class="p">)</span>
+        <span class="n">s</span> <span class="o">=</span> <span class="nb">input</span><span class="p">()</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">192</span> <span class="ow">or</span> <span class="ow">not</span> <span class="nb">all</span><span class="p">(</span><span class="n">c</span> <span class="ow">in</span> <span class="n">string</span><span class="p">.</span><span class="n">hexdigits</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">s</span><span class="p">):</span>
+            <span class="k">print</span><span class="p">(</span><span class="s">"Nope1."</span><span class="p">)</span>
+            <span class="k">break</span>
+        <span class="k">print</span><span class="p">(</span><span class="n">encrypt</span><span class="p">(</span><span class="n">s</span><span class="p">))</span>
+        <span class="n">req</span> <span class="o">=</span> <span class="n">req</span> <span class="o">+</span> <span class="mi">1</span>
+    <span class="k">elif</span> <span class="n">ans</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">"Give me the decrypted challenge:"</span><span class="p">)</span>
+        <span class="n">c</span> <span class="o">=</span> <span class="nb">input</span><span class="p">().</span><span class="n">strip</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">c</span> <span class="o">==</span> <span class="n">chall</span><span class="p">:</span>
+            <span class="k">print</span><span class="p">(</span><span class="s">"Good job! You did it in {} requests"</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="n">req</span><span class="p">))</span>
+            <span class="k">if</span> <span class="n">req</span> <span class="o">&lt;=</span> <span class="n">lim1</span><span class="p">:</span>
+                <span class="k">print</span><span class="p">(</span><span class="s">"Level 1 completed: {}"</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="n">flag1</span><span class="p">))</span>
+                <span class="k">if</span> <span class="n">req</span> <span class="o">&lt;=</span> <span class="n">lim2</span><span class="p">:</span>
+                    <span class="k">print</span><span class="p">(</span><span class="s">"Level 2 completed: {}"</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="n">flag2</span><span class="p">))</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="k">print</span><span class="p">(</span><span class="s">"Unfortunately, that's not enough for the second flag"</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">print</span><span class="p">(</span><span class="s">"Unfortunately, that's not enough for the first flag"</span><span class="p">)</span>
+
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">print</span><span class="p">(</span><span class="s">"Nope."</span><span class="p">)</span>
+        <span class="k">break</span>
+</code></pre></div></div>
+
+<p>Our task is essentially the following: perform at most <code class="language-plaintext highlighter-rouge">lim1 – 1 </code>encryptions and send the decrypted challenge, so we need to uncover the secret in 128 – 1 == 127 queries. <code class="language-plaintext highlighter-rouge">apply_secret(c)</code> essentially does the following: the <code class="language-plaintext highlighter-rouge">ith</code> bit of the output (where the MSB’s index is 0, etc) is <code class="language-plaintext highlighter-rouge">r[secret[i]]</code>, where <code class="language-plaintext highlighter-rouge">r</code> is the binary representation of the input block. The first key observation is the following: <code class="language-plaintext highlighter-rouge">secret</code> is a <strong>permutation</strong> of the numbers in range 0 .. 127, so every number in that range appears on it exactly <em>once and only once in a unique</em> position. The concept is to check what happens to a single 1 bit where all the rest of the bits are 0.</p>
+
+<p>One shall claim that t is a <a href="https://en.wikipedia.org/wiki/Bijection#:~:text=In%20mathematics%2C%20a%20bijection%2C%20bijective,element%20of%20the%20first%20set">bijection</a> from the set {$2^i$ | 0 &lt;= <code class="language-plaintext highlighter-rouge">i</code> &lt;= 127} to itself. Why? Well, based on our analysis of the function apply_secret, if we input to the function $2^i$, the <code class="language-plaintext highlighter-rouge">jth</code> bit (again, where MSB is 0) will be zero except when <code class="language-plaintext highlighter-rouge">secret[j] = 127 - i</code> (again, not <code class="language-plaintext highlighter-rouge">i</code> due to endianess ($2^{127}$ is every bit 0 except the MSB)). Secret is a PERMUTATION that spans 0 .. 127, therefore, there exists only a single unique <code class="language-plaintext highlighter-rouge">j</code> such that <code class="language-plaintext highlighter-rouge">secret[j] = 127 - i</code>. 
+Based on the above analysis, t($2^{127-i}$) == $2^{127-secret[i]}$ (since MSB is $2^{127}$, etc); note again that secret is a permutation of the index range, therefore this is a bijection, and in fact, a very useful one.</p>
+
+<h3 id="analysis"><strong>Analysis</strong></h3>
+<p>Now, one shall continue by performing an analysis of the encrypt function. Based on the shift arithmetic one can assume that we are working with 6 blocks, each containing 128 bits. Let us denote the blocks with <code class="language-plaintext highlighter-rouge">A</code>, <code class="language-plaintext highlighter-rouge">B</code>, <code class="language-plaintext highlighter-rouge">C</code>, <code class="language-plaintext highlighter-rouge">D</code>, <code class="language-plaintext highlighter-rouge">E</code>, <code class="language-plaintext highlighter-rouge">F</code>, where <code class="language-plaintext highlighter-rouge">A</code> is the most significant block.</p>
+
+<p>Note that to_encrypt is the integer form of the hex message
+The encryption loop:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">9</span><span class="p">):</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">apply_secret</span><span class="p">(</span><span class="n">to_encrypt</span> <span class="o">&gt;&gt;</span> <span class="mi">640</span><span class="p">)</span>
+    <span class="n">to_encrypt</span> <span class="o">=</span> <span class="p">(((</span><span class="n">x</span><span class="o">^</span><span class="n">to_encrypt</span><span class="p">)</span> <span class="o">&amp;</span> <span class="mh">0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="mi">640</span><span class="p">)</span> <span class="o">|</span> <span class="p">(</span><span class="n">to_encrypt</span> <span class="o">&gt;&gt;</span> <span class="mi">128</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>the following process occurs:</p>
+
+<ol>
+  <li>set x to <code class="language-plaintext highlighter-rouge">t(A)</code> (the most significant block)</li>
+  <li>move the last block, <code class="language-plaintext highlighter-rouge">F</code> (least significant), to be the first block and shift everything one block to the right, and <code class="language-plaintext highlighter-rouge">xor</code> the new last block with <code class="language-plaintext highlighter-rouge">x</code></li>
+</ol>
+
+<p>essentially, this transforms :</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>A   B   C   D   E   F --&gt; t(A)^F  A  B  C  D  E
+</code></pre></div></div>
+
+<p>One good technique when solving crypto challenges is to fix some controllable variables with “nice” values. one might intuitively try to set all the blocks except <code class="language-plaintext highlighter-rouge">A</code> to be 0, to avoid xoring a lot of blocks to simply the process a single bit. After 6 iterations, the process applied on <code class="language-plaintext highlighter-rouge">A</code>, <code class="language-plaintext highlighter-rouge">0</code>, <code class="language-plaintext highlighter-rouge">0</code>, <code class="language-plaintext highlighter-rouge">0</code>, <code class="language-plaintext highlighter-rouge">0</code>, <code class="language-plaintext highlighter-rouge">0</code> would result in the following block sequence:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>t(t(t(t(t(t(A)))))), t(t(t(t(t(A))))), t(t(t(t(A)))), t(t(t(A))), t(t(A)), t(A)
+1                        2                  3            4          5         6
+</code></pre></div></div>
+
+<p>We know that after 3 more iterations, the last 3 blocks (least significant) will be:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>t(t(t(t(t(t(A)))))), t(t(t(t(t(A))))), t(t(t(t(A))))
+</code></pre></div></div>
+
+<p>Substitute <code class="language-plaintext highlighter-rouge">v = t(t(t(t(A))))</code>, then the last 3 blocks are essentially <code class="language-plaintext highlighter-rouge">t(t(v)), t(v), v</code>.</p>
+
+<table>
+  <tbody>
+    <tr>
+      <td>Now, since <code class="language-plaintext highlighter-rouge">t</code> is a bijection from the set {$2^i$</td>
+      <td>0 &lt;= <code class="language-plaintext highlighter-rouge">i</code> &lt;= 127} to itself, then <code class="language-plaintext highlighter-rouge">t(t(t(...))</code> iterated for any amount of times is a bijection from the set {$2^i$</td>
+      <td>0 &lt;= <code class="language-plaintext highlighter-rouge">i</code> &lt;= 127} to itself as well. (because it receives values that span the index range and outputs them, the output set is the same as the input set).</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>So we know that if we set <code class="language-plaintext highlighter-rouge">A</code> to $2^i$, we get a power of 2 in <code class="language-plaintext highlighter-rouge">v</code>, and a UNIQUE one, since based on the bijection t(t(t…($2^i$))) <code class="language-plaintext highlighter-rouge">!=</code> t(t(t…($2^j$))) unless <code class="language-plaintext highlighter-rouge">j=i</code>. The beautiful observation: We know <code class="language-plaintext highlighter-rouge">t(v)</code> and <code class="language-plaintext highlighter-rouge">v</code>, and since v can span the entire bit range we can recover the indexes in the secret array. That would take precisely 128 queries, for every power of 2, but with the decryption challenge that would result in a total of 129 queries, where the limit is 128. However, after the 127th encryption, only one t value will be missing, so we can simply check what is missing and since t is a bijection what value of t we haven’t seen yet, and set that to the value of the missing v. Therefore, the entire process would take 127 + 1 == 128 queries, which is exactly <code class="language-plaintext highlighter-rouge">lim1</code>!</p>
+
+<h3 id="solving"><strong>Solving</strong></h3>
+<p>The algorithm:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="mi">0</span> <span class="p">..</span> <span class="mi">126</span>
+	<span class="n">out_blocks</span> <span class="o">=</span> <span class="n">encrypt</span><span class="p">(</span><span class="mi">2</span><span class="o">^</span><span class="n">i</span><span class="p">)</span>
+	<span class="n">find</span> <span class="n">j</span> <span class="n">such</span> <span class="n">that</span> <span class="mi">2</span><span class="o">^</span><span class="n">j</span> <span class="o">==</span> <span class="n">out_blocks</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span> <span class="c1"># last block
+</span>	<span class="n">find</span> <span class="n">k</span> <span class="n">such</span> <span class="n">that</span> <span class="mi">2</span><span class="o">^</span><span class="n">k</span> <span class="o">==</span> <span class="n">out_blocks</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span> <span class="c1"># one before last block
+</span>	<span class="nb">set</span> <span class="n">secret</span><span class="p">[</span><span class="mi">127</span><span class="o">-</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="mi">127</span><span class="o">-</span><span class="n">j</span>
+</code></pre></div></div>
+
+<p>Fill the <code class="language-plaintext highlighter-rouge">t</code> value you haven’t seen yet in the missing spot in secret array. We have uncovered the secret! The algorithm of decryption using the secret is documented in the solution code we programmed.</p>
+
+<p>Solution :</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">binascii</span>
+<span class="kn">from</span> <span class="nn">hashlib</span> <span class="kn">import</span> <span class="n">sha256</span>
+<span class="kn">from</span> <span class="nn">itertools</span> <span class="kn">import</span> <span class="n">product</span>
+<span class="kn">from</span> <span class="nn">math</span> <span class="kn">import</span> <span class="n">log2</span>
+<span class="kn">from</span> <span class="nn">pwn</span> <span class="kn">import</span> <span class="n">remote</span>
+
+
+<span class="c1"># solve the Proof-Of-Work
+</span><span class="k">def</span> <span class="nf">find_tail</span><span class="p">(</span><span class="n">tail</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">tail_len</span><span class="o">=</span><span class="mi">6</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">L</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">product</span><span class="p">(</span><span class="sa">b</span><span class="s">"0123456789abcdefghijklmnopqrstuvwxyz"</span><span class="p">,</span> <span class="n">repeat</span><span class="o">=</span><span class="n">L</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">sha256</span><span class="p">(</span><span class="nb">bytearray</span><span class="p">(</span><span class="n">s</span><span class="p">)).</span><span class="n">hexdigest</span><span class="p">()[</span><span class="o">-</span><span class="n">tail_len</span><span class="p">:]</span> <span class="o">==</span> <span class="n">tail</span><span class="p">:</span>
+                <span class="k">return</span> <span class="nb">bytearray</span><span class="p">(</span><span class="n">s</span><span class="p">).</span><span class="n">decode</span><span class="p">()</span>
+    <span class="k">raise</span> <span class="nb">ValueError</span><span class="p">(</span><span class="s">"unable to find solution to POW"</span><span class="p">)</span>
+
+
+<span class="c1"># split a hex string into blocks
+</span><span class="k">def</span> <span class="nf">blocks</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
+    <span class="n">ret</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">block</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">),</span> <span class="mi">32</span><span class="p">):</span>
+        <span class="n">ret</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="nb">bin</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">s</span><span class="p">[</span><span class="n">block</span><span class="p">:</span><span class="n">block</span> <span class="o">+</span> <span class="mi">32</span><span class="p">],</span> <span class="mi">16</span><span class="p">))[</span><span class="mi">2</span><span class="p">:].</span><span class="n">rjust</span><span class="p">(</span><span class="mi">128</span><span class="p">,</span> <span class="s">'0'</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">ret</span>
+
+
+<span class="c1"># This apply_secret has the same functionality as the source on the server side
+# We don't really need to know how this works - we can abstract it away
+# If it matters, it shuffles the bits of a number with a permutation
+</span><span class="k">def</span> <span class="nf">apply_secret</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">secret</span><span class="p">):</span>
+    <span class="n">r</span> <span class="o">=</span> <span class="nb">bin</span><span class="p">(</span><span class="n">c</span><span class="p">)[</span><span class="mi">2</span><span class="p">:].</span><span class="n">rjust</span><span class="p">(</span><span class="mi">128</span><span class="p">,</span> <span class="s">'0'</span><span class="p">)</span>
+    <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="s">''</span><span class="p">.</span><span class="n">join</span><span class="p">([</span><span class="nb">str</span><span class="p">(</span><span class="n">r</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">secret</span><span class="p">]),</span> <span class="mi">2</span><span class="p">)</span>
+
+
+<span class="c1"># Given the secret, reverse the encryption
+# Encrypt splits the number into 6 blocks of 128 bits each
+# It runs 9 times
+# Each time, it takes the top block, applies the secret, and xors it with the bottom block
+# Then each block is shifted down
+#   A     B     C     D     E     F
+# f(A)^F  A     B     C     D     E
+# We known A, B, C, D, and E. Since we have the secret, we also know f(A)
+# Then to get F, we can xor the top block with f(A)
+# Then shift the blocks back
+</span><span class="k">def</span> <span class="nf">decrypt</span><span class="p">(</span><span class="n">n</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">secret</span><span class="p">:</span> <span class="nb">list</span><span class="p">):</span>
+    <span class="n">to_decrypt</span> <span class="o">=</span> <span class="n">n</span>
+    <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">9</span><span class="p">):</span>
+        <span class="n">top_block</span> <span class="o">=</span> <span class="n">to_decrypt</span> <span class="o">&gt;&gt;</span> <span class="mi">640</span>  <span class="c1"># f(A) ^ F
+</span>        <span class="n">second_block</span> <span class="o">=</span> <span class="p">(</span><span class="n">to_decrypt</span> <span class="o">&gt;&gt;</span> <span class="mi">512</span><span class="p">)</span> <span class="o">&amp;</span> <span class="mh">0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF</span>  <span class="c1"># A
+</span>        <span class="c1"># 0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF is 2^128 - 1
+</span>        <span class="c1"># this is the same as mod 2^128
+</span>
+        <span class="n">to_decrypt</span> <span class="o">=</span> <span class="p">(</span><span class="n">to_decrypt</span> <span class="o">&lt;&lt;</span> <span class="mi">128</span><span class="p">)</span> <span class="o">%</span> <span class="p">(</span><span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="mi">768</span><span class="p">)</span>  <span class="c1"># shift the blocks up, and take out the top one
+</span>        <span class="n">x</span> <span class="o">=</span> <span class="n">apply_secret</span><span class="p">(</span><span class="n">second_block</span><span class="p">,</span> <span class="n">secret</span><span class="p">)</span>  <span class="c1"># get f(A)
+</span>        <span class="n">to_decrypt</span> <span class="o">|=</span> <span class="n">x</span> <span class="o">^</span> <span class="n">top_block</span>  <span class="c1"># fill in the bottom block with F
+</span>
+    <span class="n">dec</span> <span class="o">=</span> <span class="nb">hex</span><span class="p">(</span><span class="n">to_decrypt</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">dec</span><span class="p">)</span>
+    <span class="n">dec</span> <span class="o">=</span> <span class="n">dec</span><span class="p">[</span><span class="mi">2</span><span class="p">:]</span>  <span class="c1"># remove "0x"
+</span>
+    <span class="c1"># unhexlify only works if its input has an even length
+</span>    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">dec</span><span class="p">)</span> <span class="o">&amp;</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="n">dec</span> <span class="o">=</span> <span class="s">'0'</span> <span class="o">+</span> <span class="n">dec</span>
+
+    <span class="k">return</span> <span class="n">binascii</span><span class="p">.</span><span class="n">unhexlify</span><span class="p">(</span><span class="n">dec</span><span class="p">)</span>
+
+
+<span class="c1"># test decrypt with locally generated examples
+</span><span class="k">def</span> <span class="nf">test</span><span class="p">():</span>
+    <span class="n">enc</span> <span class="o">=</span> <span class="mh">0xcb97861c616e58a69126260cf4c64e74f0fa21838edf2f3a047e38a95328823b60b636e2c9502d88623080299f85d4e572464edabb8863389937df66ac2262b4b8fc0bb93c51684e8c0e8fd82ac04f06c15a31fc1d9fc71cac0f2ad15dcf39b9</span>
+    <span class="n">secret</span> <span class="o">=</span> <span class="p">[</span><span class="mi">48</span><span class="p">,</span> <span class="mi">14</span><span class="p">,</span> <span class="mi">40</span><span class="p">,</span> <span class="mi">108</span><span class="p">,</span> <span class="mi">94</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">79</span><span class="p">,</span> <span class="mi">25</span><span class="p">,</span> <span class="mi">59</span><span class="p">,</span> <span class="mi">58</span><span class="p">,</span> <span class="mi">104</span><span class="p">,</span> <span class="mi">88</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">73</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">90</span><span class="p">,</span> <span class="mi">53</span><span class="p">,</span> <span class="mi">106</span><span class="p">,</span> <span class="mi">24</span><span class="p">,</span> <span class="mi">92</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">103</span><span class="p">,</span> <span class="mi">17</span><span class="p">,</span> <span class="mi">64</span><span class="p">,</span> <span class="mi">111</span><span class="p">,</span>
+              <span class="mi">18</span><span class="p">,</span> <span class="mi">101</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">65</span><span class="p">,</span> <span class="mi">83</span><span class="p">,</span> <span class="mi">96</span><span class="p">,</span> <span class="mi">13</span><span class="p">,</span> <span class="mi">43</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">127</span><span class="p">,</span> <span class="mi">119</span><span class="p">,</span> <span class="mi">67</span><span class="p">,</span> <span class="mi">23</span><span class="p">,</span> <span class="mi">77</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">87</span><span class="p">,</span> <span class="mi">123</span><span class="p">,</span> <span class="mi">38</span><span class="p">,</span> <span class="mi">118</span><span class="p">,</span> <span class="mi">97</span><span class="p">,</span> <span class="mi">113</span><span class="p">,</span> <span class="mi">70</span><span class="p">,</span> <span class="mi">74</span><span class="p">,</span> <span class="mi">121</span><span class="p">,</span> <span class="mi">98</span><span class="p">,</span>
+              <span class="mi">16</span><span class="p">,</span> <span class="mi">71</span><span class="p">,</span> <span class="mi">60</span><span class="p">,</span> <span class="mi">41</span><span class="p">,</span> <span class="mi">22</span><span class="p">,</span> <span class="mi">33</span><span class="p">,</span> <span class="mi">80</span><span class="p">,</span> <span class="mi">102</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">39</span><span class="p">,</span> <span class="mi">116</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">115</span><span class="p">,</span> <span class="mi">49</span><span class="p">,</span> <span class="mi">27</span><span class="p">,</span> <span class="mi">125</span><span class="p">,</span> <span class="mi">124</span><span class="p">,</span> <span class="mi">76</span><span class="p">,</span> <span class="mi">109</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">37</span><span class="p">,</span> <span class="mi">112</span><span class="p">,</span> <span class="mi">84</span><span class="p">,</span> <span class="mi">63</span><span class="p">,</span> <span class="mi">31</span><span class="p">,</span>
+              <span class="mi">117</span><span class="p">,</span> <span class="mi">56</span><span class="p">,</span> <span class="mi">114</span><span class="p">,</span> <span class="mi">69</span><span class="p">,</span> <span class="mi">36</span><span class="p">,</span> <span class="mi">46</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">45</span><span class="p">,</span> <span class="mi">52</span><span class="p">,</span> <span class="mi">86</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">82</span><span class="p">,</span> <span class="mi">122</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">66</span><span class="p">,</span> <span class="mi">93</span><span class="p">,</span> <span class="mi">91</span><span class="p">,</span> <span class="mi">55</span><span class="p">,</span> <span class="mi">72</span><span class="p">,</span> <span class="mi">51</span><span class="p">,</span> <span class="mi">62</span><span class="p">,</span> <span class="mi">105</span><span class="p">,</span> <span class="mi">68</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">75</span><span class="p">,</span> <span class="mi">29</span><span class="p">,</span>
+              <span class="mi">20</span><span class="p">,</span> <span class="mi">95</span><span class="p">,</span> <span class="mi">54</span><span class="p">,</span> <span class="mi">126</span><span class="p">,</span> <span class="mi">47</span><span class="p">,</span> <span class="mi">28</span><span class="p">,</span> <span class="mi">19</span><span class="p">,</span> <span class="mi">57</span><span class="p">,</span> <span class="mi">44</span><span class="p">,</span> <span class="mi">21</span><span class="p">,</span> <span class="mi">107</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">110</span><span class="p">,</span> <span class="mi">61</span><span class="p">,</span> <span class="mi">120</span><span class="p">,</span> <span class="mi">85</span><span class="p">,</span> <span class="mi">35</span><span class="p">,</span> <span class="mi">78</span><span class="p">,</span> <span class="mi">34</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">81</span><span class="p">,</span> <span class="mi">26</span><span class="p">,</span> <span class="mi">42</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">89</span><span class="p">,</span> <span class="mi">99</span><span class="p">]</span>
+
+    <span class="k">print</span><span class="p">(</span><span class="n">decrypt</span><span class="p">(</span><span class="n">enc</span><span class="p">,</span> <span class="n">secret</span><span class="p">))</span>
+
+
+<span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="c1"># test()
+</span>    <span class="n">r</span> <span class="o">=</span> <span class="n">remote</span><span class="p">(</span><span class="s">"challs.m0lecon.it"</span><span class="p">,</span> <span class="mi">11000</span><span class="p">)</span>
+
+    <span class="n">resp</span> <span class="o">=</span> <span class="n">r</span><span class="p">.</span><span class="n">recvline</span><span class="p">().</span><span class="n">decode</span><span class="p">().</span><span class="n">strip</span><span class="p">()</span>
+    <span class="n">tail</span> <span class="o">=</span> <span class="n">resp</span><span class="p">.</span><span class="n">split</span><span class="p">()[</span><span class="o">-</span><span class="mi">1</span><span class="p">].</span><span class="n">strip</span><span class="p">(</span><span class="s">'.'</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">resp</span><span class="p">)</span>
+
+    <span class="n">pow_ans</span> <span class="o">=</span> <span class="n">find_tail</span><span class="p">(</span><span class="n">tail</span><span class="p">)</span>
+
+    <span class="n">r</span><span class="p">.</span><span class="n">sendline</span><span class="p">(</span><span class="n">pow_ans</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">"&gt;"</span><span class="p">,</span> <span class="n">pow_ans</span><span class="p">)</span>
+
+    <span class="k">print</span><span class="p">(</span><span class="n">r</span><span class="p">.</span><span class="n">recvline</span><span class="p">().</span><span class="n">decode</span><span class="p">().</span><span class="n">strip</span><span class="p">())</span>
+
+    <span class="n">chall</span> <span class="o">=</span> <span class="n">r</span><span class="p">.</span><span class="n">recvline</span><span class="p">().</span><span class="n">decode</span><span class="p">().</span><span class="n">strip</span><span class="p">()</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">chall</span><span class="p">)</span>
+
+    <span class="n">secret</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">128</span><span class="p">)]</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">127</span><span class="p">):</span>
+        <span class="k">print</span><span class="p">(</span><span class="n">r</span><span class="p">.</span><span class="n">recvuntil</span><span class="p">(</span><span class="s">"Give me the decrypted challenge</span><span class="se">\n</span><span class="s">"</span><span class="p">).</span><span class="n">decode</span><span class="p">().</span><span class="n">strip</span><span class="p">())</span>
+        <span class="n">query</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="nb">hex</span><span class="p">(</span><span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="n">i</span><span class="p">))[</span><span class="mi">2</span><span class="p">:].</span><span class="n">rjust</span><span class="p">(</span><span class="mi">32</span> <span class="o">*</span> <span class="mi">6</span><span class="p">,</span> <span class="s">'0'</span><span class="p">)</span>
+        <span class="n">r</span><span class="p">.</span><span class="n">sendline</span><span class="p">(</span><span class="s">'1'</span><span class="p">)</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">'&gt; 1'</span><span class="p">)</span>
+        <span class="k">print</span><span class="p">(</span><span class="n">r</span><span class="p">.</span><span class="n">recvuntil</span><span class="p">(</span><span class="s">"Give me something to encrypt (hex):</span><span class="se">\n</span><span class="s">"</span><span class="p">).</span><span class="n">decode</span><span class="p">().</span><span class="n">strip</span><span class="p">())</span>
+        <span class="n">r</span><span class="p">.</span><span class="n">sendline</span><span class="p">(</span><span class="n">query</span><span class="p">)</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">'&gt;'</span><span class="p">,</span> <span class="n">query</span><span class="p">)</span>
+
+        <span class="n">result</span> <span class="o">=</span> <span class="n">r</span><span class="p">.</span><span class="n">recvline</span><span class="p">().</span><span class="n">decode</span><span class="p">().</span><span class="n">strip</span><span class="p">()</span>
+        <span class="k">print</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+        <span class="n">value</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="n">log2</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">result</span><span class="p">[</span><span class="o">-</span><span class="mi">32</span><span class="p">:],</span> <span class="mi">16</span><span class="p">)))</span>
+        <span class="n">index</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="n">log2</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">result</span><span class="p">[</span><span class="o">-</span><span class="mi">64</span><span class="p">:</span><span class="o">-</span><span class="mi">32</span><span class="p">],</span> <span class="mi">16</span><span class="p">)))</span>
+        <span class="n">secret</span><span class="p">[</span><span class="mi">127</span> <span class="o">-</span> <span class="n">index</span><span class="p">]</span> <span class="o">=</span> <span class="mi">127</span> <span class="o">-</span> <span class="n">value</span>
+
+    <span class="k">print</span><span class="p">(</span><span class="s">"secret:"</span><span class="p">,</span> <span class="n">secret</span><span class="p">)</span>
+
+    <span class="n">missing</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">128</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">i</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">secret</span><span class="p">:</span>
+            <span class="n">missing</span> <span class="o">=</span> <span class="n">i</span>
+            <span class="k">break</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">128</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">secret</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+            <span class="n">secret</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">missing</span>
+            <span class="k">break</span>
+
+    <span class="n">dec</span> <span class="o">=</span> <span class="n">decrypt</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">chall</span><span class="p">,</span> <span class="mi">16</span><span class="p">),</span> <span class="n">secret</span><span class="p">)</span>
+
+    <span class="n">r</span><span class="p">.</span><span class="n">sendline</span><span class="p">(</span><span class="s">'2'</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">'&gt; 2'</span><span class="p">)</span>
+
+    <span class="k">print</span><span class="p">(</span><span class="n">r</span><span class="p">.</span><span class="n">recvuntil</span><span class="p">(</span><span class="s">"Give me the decrypted challenge:</span><span class="se">\n</span><span class="s">"</span><span class="p">).</span><span class="n">decode</span><span class="p">().</span><span class="n">strip</span><span class="p">())</span>
+    <span class="n">r</span><span class="p">.</span><span class="n">sendline</span><span class="p">(</span><span class="n">dec</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">'&gt;'</span><span class="p">,</span> <span class="n">dec</span><span class="p">)</span>
+
+    <span class="k">print</span><span class="p">(</span><span class="n">r</span><span class="p">.</span><span class="n">recvall</span><span class="p">(</span><span class="mi">4</span><span class="p">).</span><span class="n">decode</span><span class="p">())</span>
+
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">'__main__'</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+</code></pre></div></div>
+
+<blockquote>
+  <p>Flag: <strong>ptm{sometimes_encryption_can_be_as_bad_as_decryption_ecdb556edcffd}</strong></p>
+</blockquote>
+
+<p>Thank you to team “pwnthem0le” from Politecnico di Torino for hosting such a fun event. Also special shoutout to my teammates Lior and Stanley for their work on this problem. We look forward to competing in future hosted CTFs and conferences :)</p>
+
+
+</div>
+
+<div class="related">
+  <h2>Related Posts</h2>
+  <ul class="related-posts">
+    
+      <li>
+        <h3>
+          <a href="/2020/08/16/Analysis-Incarnate2/">
+            Analysis Incarnate 2
+            <small>16 Aug 2020</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/2020/08/15/Analysis-Incarnate/">
+            Analysis Incarnate
+            <small>15 Aug 2020</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/2020/07/17/Access=0000/">
+            Access=0000
+            <small>17 Jul 2020</small>
+          </a>
+        </h3>
+      </li>
+    
+  </ul>
+</div>
+
+
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<script>
+  MathJax = {
+    tex: {
+      inlineMath: [['$', '$'], ['\\(', '\\)']]
+    }
+  };
+  </script>
+  <script id="MathJax-script" async
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+  </script>
+    </div>
+
+  </body>
+</html>
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<script>
+  MathJax = {
+    tex: {
+      inlineMath: [['$', '$'], ['\\(', '\\)']]
+    }
+  };
+  </script>
+  <script id="MathJax-script" async
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+  </script>

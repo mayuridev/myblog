@@ -7,7 +7,7 @@ This is a proof of Euler's Identity using the Taylor Series.
 
 ![a](https://latex.codecogs.com/png.latex?\dpi{300}&space;\tiny&space;e^{i\pi}&plus;1=0)
 
-We can write `e^iphi` as the Taylor Series expansion. 
+We can write $ie^{i\phi}$ as the Taylor Series expansion. 
 
 ![b](https://latex.codecogs.com/png.latex?\dpi{300}&space;\tiny&space;e^{i\phi}=\sum_{n=0}^{\infty}\frac{(i\phi)^{n}}{n!})
 

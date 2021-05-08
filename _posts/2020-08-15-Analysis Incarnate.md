@@ -15,7 +15,7 @@ Using the quotient rule, we end up with :
 
 ![c](https://latex.codecogs.com/png.latex?\dpi{300}&space;\tiny&space;f\prime(x)=\frac{(cos\phi&plus;isin\phi)ie^{i\phi}-e^{i\phi}(-sin\phi&plus;icos\phi)}{(cos\phi&plus;isin\phi)^{2}})
 
-The derivative of `f(x)` is `ie^(iphi)`, and the derivative of `g(x)` is `e^(iphi)`. Let's focus on the numerator. Distributing the respective pairs, we get : 
+The derivative of `f(x)` is $ie^{i\phi}$, and the derivative of `g(x)` is $e^{i\phi}$. Let's focus on the numerator. Distributing the respective pairs, we get : 
 
 ![d](https://latex.codecogs.com/png.latex?\dpi{300}&space;\tiny&space;=e^{i\phi}(icos\phi-sin\phi&plus;sin\phi-icos\phi))
 
@@ -25,7 +25,7 @@ As you can see, the derivative of `f(x)=0`, and the only function whose derivati
 
 ![f](https://latex.codecogs.com/png.latex?\dpi{300}&space;\tiny&space;f(0)=\frac&space;{e^{i0}}{cos0&plus;isin0}=\frac{1}{1})
 
-After simplifying, we end up with (1/1), because `e^(i0)` is one, `isin(0)` is zero, and `cos(0)` is one. Since we know that `c` is a constant, the value of `f(x)` remains the same.
+After simplifying, we end up with (1/1), because $e^{i0}$ is one, $isin(0)$ is zero, and $cos(0)$ is one. Since we know that `c` is a constant, the value of `f(x)` remains the same.
 
 ![g](https://latex.codecogs.com/png.latex?\dpi{300}&space;\tiny&space;f(x)=\frac&space;{e^{i\phi}}{cos\phi&plus;isin\phi}=1)
 
