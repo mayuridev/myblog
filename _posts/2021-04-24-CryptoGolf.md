@@ -123,7 +123,7 @@ for _ in range(9):
 
 the following process occurs:
 
-1. set x to `t(A)` (the most significant block)
+1. set `x` to `t(A)` (the most significant block)
 2. move the last block, `F` (least significant), to be the first block and shift everything one block to the right, and `xor` the new last block with `x`
 
 essentially, this transforms :
@@ -132,7 +132,7 @@ essentially, this transforms :
 A   B   C   D   E   F --> t(A)^F  A  B  C  D  E
 ```
 
-One good technique when solving crypto challenges is to fix some controllable variables with “nice” values. one might intuitively try to set all the blocks except `A` to be 0, to avoid xoring a lot of blocks to simply the process a single bit. After 6 iterations, the process applied on `A`, `0`, `0`, `0`, `0`, `0` would result in the following block sequence:
+One good technique when solving crypto challenges is to fix some controllable variables with “nice” values. one might intuitively try to set all the blocks except `A` to be 0, to avoid `xor`ing a lot of blocks to simply the process a single bit. After 6 iterations, the process applied on `A`, `0`, `0`, `0`, `0`, `0` would result in the following block sequence:
 
 ```
 t(t(t(t(t(t(A)))))), t(t(t(t(t(A))))), t(t(t(t(A)))), 
@@ -152,7 +152,7 @@ Substitute `v = t(t(t(t(A))))`, then the last 3 blocks are essentially `t(t(v)),
 
 
 
-So we know that if we set `A` to $2^i$, we get a power of 2 in `v`, and a UNIQUE one, since based on the bijection t(t(t...( $2^i$ ))) `!=` t(t(t...( $2^{j}$ ))) unless `j=i`. The beautiful observation: We know `t(v)` and `v`, and since v can span the entire bit range we can recover the indexes in the secret array. That would take precisely 128 queries, for every power of 2, but with the decryption challenge that would result in a total of 129 queries, where the limit is 128. However, after the 127th encryption, only one t value will be missing, so we can simply check what is missing and since t is a bijection what value of t we haven't seen yet, and set that to the value of the missing v. Therefore, the entire process would take 127 + 1 == 128 queries, which is exactly `lim1`!
+So we know that if we set `A` to $2^i$, we get a power of 2 in `v`, and a UNIQUE one, since based on the bijection t(t(t...( $2^i$ ))) `!=` t(t(t...( $2^{j}$ ))) unless `j=i`. The beautiful observation: We know `t(v)` and `v`, and since v can span the entire bit range we can recover the indexes in the secret array. That would take precisely 128 queries, for every power of 2, but with the decryption challenge that would result in a total of 129 queries, where the limit is 128. However, after the 127th encryption, only one `t` value will be missing, so we can simply check what is missing and since t is a bijection what value of t we haven't seen yet, and set that to the value of the missing `v`. Therefore, the entire process would take 127 + 1 == 128 queries, which is exactly `lim1`!
 
 ### **Solving**
 The algorithm:
@@ -311,7 +311,7 @@ if __name__ == '__main__':
 
 > Flag: **ptm{sometimes_encryption_can_be_as_bad_as_decryption_ecdb556edcffd}**
 
-Thank you to team "pwnthem0le" from Politecnico di Torino for hosting such a fun event. Also special shoutout to my teammates Lior and Stanley for their work on this problem. We look forward to competing in future hosted CTFs and conferences :)
+Thank you to team *pwnthem0le* from Politecnico di Torino for hosting such a fun event. Also special shoutout to my teammates Lior and Stanley for their work on this problem. We look forward to competing in future CTFs and conferences :)
 
 
 
