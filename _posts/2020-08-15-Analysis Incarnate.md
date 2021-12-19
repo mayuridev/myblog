@@ -3,8 +3,11 @@ title: 'Analysis Incarnate'
 ---
 
 This is a quick proof of Euler's formula without the use of the Taylor Series. 
+<!---
+Link testgif.gif
 
-![a](https://latex.codecogs.com/png.latex?\dpi{300}&space;\tiny&space;e^{i\phi}&space;=&space;cos&space;\phi&space;&plus;&space;i&space;sin\phi)
+-->
+![a](media/testgif.gif)
 
 
 Even with the imaginary number `i`, this equation is differentiable, so we can take the derivative of :
