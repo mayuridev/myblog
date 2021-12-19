@@ -3,11 +3,8 @@ title: 'Analysis Incarnate'
 ---
 
 This is a quick proof of Euler's formula without the use of the Taylor Series. 
-<!---
-Link testgif.gif
 
--->
-![a](media/testgif.gif)
+![a](media/euler1.gif)
 
 
 Even with the imaginary number `i`, this equation is differentiable, so we can take the derivative of :
