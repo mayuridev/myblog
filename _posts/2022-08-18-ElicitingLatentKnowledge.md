@@ -3,9 +3,17 @@ title: 'Eliciting Latent Knowledge'
 ---
 
 
-My friends ([Uzay Girit](https://www.uzpg.me/), [Pranav Gade](https://pranavg.me/) & [Sophie Wang](https://fishlalune.github.io)) and I recently participated in an ELK (Eliciting Latent Knowledge) contest held by [Prometheus Science](https://prometheus.science/) with a prize pool of $100,000. Here are our two proposals:
+My friends ([Uzay Girit](https://www.uzpg.me/), [Pranav Gade](https://pranavg.me/) & [Sophie Wang](https://fishlalune.github.io)) and I recently participated in an ELK (Eliciting Latent Knowledge) contest held by [Prometheus Science](https://prometheus.science/) with a prize pool of $100,000.
 
+> Suppose we train a model to predict what the future will look like according to cameras and other sensors. We then use planning algorithms to find a sequence of actions that lead to predicted futures that look good to us.
+> 
+> But some action sequences could tamper with the cameras so they show happy humans regardless of what’s really happening. More generally, some futures look great on camera but are actually catastrophically bad.
+> 
+>In these cases, the prediction model "knows" facts (like "the camera was tampered with") that are not visible on camera but would change our evaluation of the predicted future if we learned them. How can we train this model to report its latent knowledge of off-screen events?
 
+Contrary to Neural Network interpretability/transparency focused on low-level neurons or circuits, ELK focuses on generating natural language descriptions that reflect the model's "true beliefs". In short, this AI-alignment problem is trying to think of ways to get an AI to *tell the truth* in a contrived hypothetical situation. Here are our two proposals:
+
+<!--more-->
 
 ## Predicting the Predictor
 
