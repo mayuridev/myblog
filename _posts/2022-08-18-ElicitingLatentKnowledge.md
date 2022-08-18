@@ -43,7 +43,7 @@ Note that this strategy does not directly train the reporter on relaying truthfu
 
 Our 2nd proposal is to have the activations at some layer (potentially all layers) go through an embedding layer and be passed to an encoder-decoder model like BERT. At this point, we'll drop random tokens from the sequence, which will have to be reconstructed by the encoder-decoder. This has two advantages: we can add "how sensible the natural language sentence is" to the loss term. And since this would incentivize steganography, dropping random tokens will ensure that probabilistically, there is an arbitrarily low chance (which we get to choose to be as low as we desire) of the steganography/encryption scheme working. 
 
-![Token](../media/token.png)
+![Token](/token.png)
 An information-theoretic bound here compared to a model where we don't do this can allow us to push the chance down to 0. That is, if we figure out the minimum amount of bits needed, we can drop all extra information. If this ends up not producing sentences simple enough for a human to understand, we can add a human in the loop whose job is to read the sentences, understand them, and rewrite them in human’s own words.
 
 We expect this to work because BERT is trained on completing English sentences, so the input sentences will have to make sense. Dropping information will make steganography/cryptography pretty difficult, and encourage duplicating information. Having a human in the loop will ensure that everything is represented in terms of human-level concepts, or teach the human the concepts from first principles.
