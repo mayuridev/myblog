@@ -3,7 +3,7 @@ title: 'Eliciting Latent Knowledge'
 ---
 
 
-My friends ([Uzay Girit](https://www.uzpg.me/), [Pranav Gade](https://pranavg.me/) & [Sophie Wang](https://fishlalune.github.io)) and I recently participated in an ELK (Eliciting Latent Knowledge) contest held by [Prometheus Science](https://prometheus.science/) with a prize pool of $100,000. Our *Predicting The Predictor* proposal won 2nd place. 
+My friends ([Uzay Girit](https://www.uzpg.me/), [Pranav Gade](https://pranavg.me/) & [Sophie Wang](https://sophicle.wordpress.com/)) and I recently participated in an ELK (Eliciting Latent Knowledge) contest held by [Prometheus Science](https://prometheus.science/) with a prize pool of $100,000. Our *Predicting The Predictor* proposal won 2nd place. I would like to thank FTX and the Future Fund Foundation for their generous funding.
 
 > Suppose we train a model to predict what the future will look like according to cameras and other sensors. We then use planning algorithms to find a sequence of actions that lead to predicted futures that look good to us.
 > 
